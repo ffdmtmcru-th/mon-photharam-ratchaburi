@@ -262,7 +262,7 @@
     position:relative; border-radius:20px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.4);
     background:#000; border:1px solid rgba(237,227,208,0.12);
   }
-  .hv-frame video{width:100%; display:block; aspect-ratio:16/9; background:#000;}
+  .hv-frame video,.hv-frame iframe{width:100%; display:block; aspect-ratio:16/9; background:#000; border:0;}
   .hv-tag{
     position:absolute; top:16px; left:16px; font-size:11px; letter-spacing:1.5px; color:var(--plaster-warm);
     background:rgba(15,37,48,0.6); border:1px solid rgba(201,162,39,0.4); padding:5px 12px; border-radius:999px;
@@ -454,8 +454,24 @@
   .mi-stats b{display:block; font-family:'Noto Serif Thai',serif; font-size:36px; line-height:1; color:var(--gold); font-weight:600;}
   .mi-stats span{font-size:12px; letter-spacing:.6px; opacity:.75;}
 
-  .wall-viewer{margin-top:52px; display:grid; grid-template-columns:1.35fr 1fr; gap:32px; align-items:start;}
+  .wall-viewer{margin-top:52px; display:grid; grid-template-columns:minmax(260px,330px) 1fr; gap:28px; align-items:start;}
   @media (max-width:900px){ .wall-viewer{grid-template-columns:1fr;} }
+  .wall-viewer .plan-card{position:sticky; top:92px;}
+  @media (max-width:900px){ .wall-viewer .plan-card{position:static;} }
+  .wall-result{display:grid; grid-template-columns:1.05fr 1fr; gap:22px; align-items:start; min-width:0; scroll-margin-top:90px;}
+  @media (max-width:1100px){ .wall-result{grid-template-columns:1fr;} }
+  .wall-result.flash .wall-stage{animation:resFlash .9s ease;}
+  @keyframes resFlash{0%{box-shadow:0 0 0 3px var(--gold), var(--shadow);} 100%{box-shadow:var(--shadow);}}
+  .wi-pos{font-size:12.5px; color:#7a6b57; margin:-2px 0 12px; display:flex; gap:6px; align-items:flex-start;}
+  .plan-wrap{position:relative;}
+  .plan-tip{position:absolute; z-index:5; pointer-events:none; width:150px; background:var(--paper); color:var(--indigo-deep); border-radius:10px; padding:6px; box-shadow:0 10px 26px rgba(0,0,0,.45); opacity:0; transform:translate(-50%,-100%) translateY(-8px); transition:opacity .15s; text-align:left;}
+  .plan-tip.show{opacity:1;}
+  .plan-tip img, .plan-tip svg{display:block; width:100%; aspect-ratio:4/3; object-fit:cover; object-position:center 28%; border-radius:6px; background:var(--indigo-deep);}
+  .plan-tip svg{opacity:.6;}
+  .plan-tip b{display:block; font-size:12px; margin:6px 2px 0; font-family:'Noto Serif Thai',serif;}
+  .plan-tip span{display:block; font-size:10.5px; margin:0 2px 2px; color:#7a6b57;}
+  .hl{stroke:var(--gold); stroke-width:12; stroke-linecap:round; opacity:0; transition:opacity .3s; filter:drop-shadow(0 0 8px rgba(201,162,39,.9));}
+  .hl.on{opacity:.85;}
   .wall-col{min-width:0;}
   .wall-stage{background:var(--indigo); border-radius:22px; padding:22px; box-shadow:var(--shadow);}
   .wall-stage .wf-tag{position:static; display:inline-block; margin-bottom:14px;}
@@ -735,10 +751,7 @@
   <div class="heritage-video reveal">
     <div class="hv-frame">
       <span class="hv-tag"><i></i>Info-Motion Graphic</span>
-      <video controls preload="metadata" poster="assets/heritage-poster.jpg" playsinline>
-        <source src="assets/mon-heritage-motion.mp4" type="video/mp4">
-        ขออภัย เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ
-      </video>
+      <iframe id="hvPlayer" src="https://www.youtube.com/embed/Y4h8f27qf3k?rel=0&playsinline=1" title="เส้นทางมรดกมอญ Info-Motion Graphic" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <div class="hv-copy">
       <h3>ชมคลิปเส้นทางมรดกมอญฉบับเต็ม</h3>
@@ -748,6 +761,7 @@
         <div><b>Info-Motion</b>รูปแบบสื่อ</div>
         <div><b>ชุดสื่อที่ 2</b>อ้างอิงโครงการ</div>
       </div>
+      <p style="margin-top:18px"><a href="https://youtu.be/Y4h8f27qf3k" target="_blank" rel="noopener" style="color:var(--gold); font-weight:600; text-decoration:underline;">▶ ดูบน YouTube</a></p>
     </div>
   </div>
 
@@ -887,9 +901,18 @@
     </div>
   </div>
 
-  <!-- wall viewer -->
+  <!-- interactive plan -> result (image + content) -->
   <div class="wall-viewer reveal" id="wallViewer">
-    <div class="wall-col">
+    <div class="plan-card" id="planCard">
+      <h4>เลือกจุดบนผังพระอุโบสถ</h4>
+      <div class="plan-wrap">
+        <svg id="planSvg" viewBox="-70 -60 1000 1650" role="img" aria-label="ผังพระอุโบสถวัดคงคาราม"></svg>
+        <div class="plan-tip" id="planTip"></div>
+      </div>
+      <p class="plan-hint">แตะหมายเลขบนผังเพื่อดูภาพและเรื่องราวของผนังนั้น · วงเส้นประ = ยังไม่มีภาพ</p>
+    </div>
+
+    <div class="wall-result" id="wallResult">
       <div class="wall-stage" id="wallStage">
         <span class="wf-tag" id="wbTag"></span>
         <div class="wall-imgbox noimg" id="wallImgBox">
@@ -903,18 +926,10 @@
           <div class="book-arrow" id="wallNext" aria-label="ผนังถัดไป"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
         </div>
       </div>
-      <div class="wall-strip" id="wallStrip"></div>
-    </div>
-
-    <div class="wall-side">
       <div class="wisdom-info" id="wallInfo"></div>
-      <div class="plan-card">
-        <h4>ตำแหน่งผนังในพระอุโบสถ</h4>
-        <svg id="planSvg" viewBox="-70 -60 1000 1650" role="img" aria-label="ผังพระอุโบสถวัดคงคาราม"></svg>
-        <p class="plan-hint">แตะหมายเลขบนผังเพื่อเลือกผนัง · วงเส้นประ = ยังไม่มีภาพ</p>
-      </div>
     </div>
   </div>
+  <div class="wall-strip reveal" id="wallStrip"></div>
 </section>
 
 <!-- ================= ABOUT THE PROJECT ================= -->
@@ -1361,6 +1376,10 @@
       desc: s.pending ? 'รอข้อมูลเรื่องราวของผนังนี้ — เพิ่มภาพ Wall'+s.n+'.jpg ในโฟลเดอร์ assets และแก้ไขข้อความในรายการ wallSpec' : (s.desc || base.desc),
       chips: s.pending ? ['อยู่ระหว่างรวบรวมข้อมูล'] : (s.chips || base.chips),
       scene: s.pending ? pendingScene : base.scene,
+      pos: s.n<=6 ? `ผนังด้านซ้ายเมื่อหันหน้าไปทางพระประธาน (ทิศใต้) · ลำดับที่ ${s.n} นับจากพระประธาน`
+         : s.n===7 ? 'ผนังด้านหลังพระประธาน (ทิศตะวันตก)'
+         : s.n<=13 ? `ผนังด้านขวาเมื่อหันหน้าไปทางพระประธาน (ทิศเหนือ) · ลำดับที่ ${s.n-7} นับจากพระประธาน`
+         : 'ผนังด้านทางเข้า-ออก (ทิศตะวันออก) · ลำดับที่ '+(s.n-13)+' จากซ้ายไปขวา',
       img: null
     };
   });
@@ -1375,6 +1394,12 @@
   planSvg.innerHTML = `
     <rect x="-70" y="-60" width="1000" height="1650" rx="14" fill="#0d222c"/>
     <image href="assets/mural-plan.jpg" x="0" y="0" width="860" height="1530"/>
+    <g id="planHL">
+      <line class="hl" data-side="ใต้" x1="165" y1="440" x2="165" y2="1210"/>
+      <line class="hl" data-side="เหนือ" x1="697" y1="440" x2="697" y2="1210"/>
+      <line class="hl" data-side="ตะวันตก" x1="165" y1="238" x2="697" y2="238"/>
+      <line class="hl" data-side="ตะวันออก" x1="165" y1="1272" x2="697" y2="1272"/>
+    </g>
     <text class="plan-lbl" x="430" y="-18">ทิศตะวันตก (หลังพระประธาน)</text>
     <text class="plan-lbl" x="430" y="1572">ทิศตะวันออก (ทางเข้า)</text>
     <text class="plan-lbl" x="-34" y="765" transform="rotate(-90 -34 765)">ทิศใต้ · ผนัง ๑-๖</text>
@@ -1403,7 +1428,7 @@
         <div class="ws-thumb">${d.img ? `<img src="${d.img}" alt="${d.title}" loading="lazy">` : `<svg viewBox="0 0 300 300">${d.scene}</svg>`}<span class="ws-num">${d.n}</span></div>
         <div class="ws-t">${d.title}</div>
       </div>`).join('');
-    wallStrip.querySelectorAll('.ws-item').forEach(el=> el.addEventListener('click', ()=> goToWall(Number(el.dataset.i))));
+    wallStrip.querySelectorAll('.ws-item').forEach(el=> el.addEventListener('click', ()=>{ goToWall(Number(el.dataset.i)); document.getElementById('planCard').scrollIntoView && 0; }));
   }
 
   function syncMarks(){
@@ -1411,6 +1436,7 @@
       el.classList.toggle('active', i===wallIdx);
       el.classList.toggle('noimg', !wallData[i].img);
     });
+    planSvg.querySelectorAll('.hl').forEach(l=> l.classList.toggle('on', l.dataset.side===wallData[wallIdx].side));
     wallStrip.querySelectorAll('.ws-item').forEach((el,i)=> el.classList.toggle('active', i===wallIdx));
     wallReadyCount.textContent = wallData.filter(d=>d.img).length;
   }
@@ -1430,6 +1456,7 @@
         <div class="wi-tag">${d.tag}</div>
         <h3>${d.title}</h3>
         ${d.virtue ? `<div class="wi-virtue">${d.virtue}</div>` : ''}
+        <div class="wi-pos"><span>📍</span><span>${d.pos}</span></div>
         ${d.lead ? `<p class="wi-lead">${d.lead}</p>` : ''}
         <p>${d.desc}</p>
         <div class="wi-chips">${d.chips.map(c=>`<span>${c}</span>`).join('')}</div>`;
@@ -1448,7 +1475,27 @@
     renderWall(wallIdx, true);
   }
 
-  planSvg.querySelectorAll('.pm').forEach(el=> el.addEventListener('click', ()=> goToWall(Number(el.dataset.i))));
+  const wallResult = document.getElementById('wallResult');
+  const planTip = document.getElementById('planTip');
+  const planWrap = planSvg.parentElement;
+  function selectFromPlan(i){
+    goToWall(i);
+    wallResult.classList.remove('flash'); void wallResult.offsetWidth; wallResult.classList.add('flash');
+    const r = wallResult.getBoundingClientRect();
+    if(r.top > window.innerHeight*0.6 || r.bottom < 80) wallResult.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  planSvg.querySelectorAll('.pm').forEach(el=>{
+    const i = Number(el.dataset.i);
+    el.addEventListener('click', ()=> selectFromPlan(i));
+    el.addEventListener('mouseenter', ()=>{
+      const d = wallData[i], rr = el.getBoundingClientRect(), pr = planWrap.getBoundingClientRect();
+      planTip.innerHTML = (d.img ? `<img src="${d.img}" alt="">` : `<svg viewBox="0 0 300 300">${d.scene}</svg>`) + `<b>${d.n}. ${d.title}</b><span>${d.virtue||''}</span>`;
+      const w = 150, cx = Math.max(w/2+4, Math.min(pr.width-w/2-4, rr.left+rr.width/2-pr.left));
+      planTip.style.left = cx+'px'; planTip.style.top = (rr.top-pr.top)+'px';
+      planTip.classList.add('show');
+    });
+    el.addEventListener('mouseleave', ()=> planTip.classList.remove('show'));
+  });
   wallPrev.addEventListener('click', ()=> goToWall(wallIdx-1));
   wallNext.addEventListener('click', ()=> goToWall(wallIdx+1));
 
@@ -1570,6 +1617,21 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
   }, { threshold:0.15 });
   revealEls.forEach(el=>io.observe(el));
+</script>
+
+<script>
+/* YouTube Error 153: เกิดเมื่อเปิดไฟล์โดยตรง (file://) เพราะไม่มี origin/referrer ส่งให้ YouTube
+   ถ้าเปิดแบบ file:// ให้แสดงภาพปกที่กดไปดูบน YouTube แทน; เมื่ออัปโหลดขึ้นเว็บ (http/https) จะเล่นฝังตามปกติ */
+(function(){
+  if(location.protocol!=='file:') return;
+  var f=document.getElementById('hvPlayer'); if(!f) return;
+  var a=document.createElement('a');
+  a.href='https://youtu.be/Y4h8f27qf3k'; a.target='_blank'; a.rel='noopener';
+  a.style.cssText='display:block;position:relative;aspect-ratio:16/9;background:#000 url(https://img.youtube.com/vi/Y4h8f27qf3k/maxresdefault.jpg) center/cover no-repeat;';
+  a.setAttribute('aria-label','ดูวิดีโอบน YouTube');
+  a.innerHTML='<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><span style="width:76px;height:54px;border-radius:14px;background:#f00;display:flex;align-items:center;justify-content:center;"><span style="border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px"></span></span></span>';
+  f.replaceWith(a);
+})();
 </script>
 </body>
 </html>
