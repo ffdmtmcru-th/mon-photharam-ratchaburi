@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รามัญวิถี — เส้นทางวัฒนธรรมมอญ โพธาราม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Noto+Serif+Thai:wght@400;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#1B3A4B;
+    --indigo-deep:#0F2530;
+    --clay:#C1662F;
+    --clay-soft:#E08E52;
+    --gold:#C9A227;
+    --plaster:#EDE3D0;
+    --plaster-warm:#F5EEDC;
+    --lacquer:#7A2331;
+    --ink:#2A2118;
+    --paper:#F7F3E8;
+    --line: rgba(42,33,24,0.14);
+    --shadow: 0 12px 32px rgba(15,37,48,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Sarabun', sans-serif;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Noto Serif Thai', serif;
+    font-weight:700;
+    color:var(--indigo-deep);
+  }
+  .accent-face{ font-family:'Chonburi', cursive; font-weight:400; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  ::selection{background:var(--gold); color:var(--indigo-deep);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 36px;
+    background:rgba(247,243,232,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:padding .3s ease;
+  }
+  .logo{font-family:'Chonburi',cursive; font-size:20px; color:var(--indigo-deep); letter-spacing:0.5px;}
+  .logo span{color:var(--clay);}
+  .nav-links{display:flex; gap:6px; list-style:none;}
+  .nav-links a{
+    font-size:14px; padding:8px 14px; border-radius:999px; color:var(--indigo-deep);
+    display:flex; align-items:center; gap:6px; transition:background .25s, color .25s;
+  }
+  .nav-links a .n{ font-family:'Noto Serif Thai',serif; font-weight:600; font-size:11px; opacity:0.55;}
+  .nav-links a:hover{background:var(--indigo-deep); color:var(--paper);}
+  .nav-links a:hover .n{opacity:0.8;}
+  @media (max-width:900px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh; position:relative; display:flex; flex-direction:column;
+    justify-content:center; padding:140px 8vw 80px;
+    background:
+      radial-gradient(circle at 85% 12%, rgba(201,162,39,0.18), transparent 45%),
+      radial-gradient(circle at 8% 90%, rgba(193,102,47,0.16), transparent 40%),
+      linear-gradient(180deg, var(--paper) 0%, var(--plaster-warm) 100%);
+    overflow:hidden;
+  }
+  .hero-mural{
+    position:absolute; inset:0; z-index:0; opacity:0.9;
+  }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:13px; letter-spacing:2px; color:var(--lacquer);
+    margin-bottom:22px; z-index:2; position:relative;
+  }
+  .hero-eyebrow::before{content:""; width:26px; height:1px; background:var(--lacquer);}
+  h1.hero-title{
+    font-size:clamp(40px, 6.4vw, 92px);
+    line-height:1.08; max-width:15ch; z-index:2; position:relative;
+  }
+  h1.hero-title em{font-style:normal; color:var(--clay);}
+  .hero-sub{
+    max-width:52ch; margin-top:26px; font-size:18px; color:#4a3f31; z-index:2; position:relative;
+  }
+  .hero-scope{
+    margin-top:34px; display:flex; gap:28px; flex-wrap:wrap; z-index:2; position:relative;
+  }
+  .hero-scope div{font-size:13px; color:var(--indigo-deep); opacity:0.7;}
+  .hero-scope b{display:block; font-family:'Noto Serif Thai',serif; font-size:15px; opacity:1; margin-bottom:2px;}
+  .hero-cta{
+    margin-top:44px; display:flex; gap:14px; flex-wrap:wrap; z-index:2; position:relative;
+  }
+  .btn{
+    padding:14px 28px; border-radius:999px; font-size:15px; font-weight:600; cursor:pointer;
+    border:1.5px solid var(--indigo-deep); transition:all .25s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-solid{background:var(--indigo-deep); color:var(--paper);}
+  .btn-solid:hover{background:var(--clay); border-color:var(--clay);}
+  .btn-line{background:transparent; color:var(--indigo-deep);}
+  .btn-line:hover{background:var(--indigo-deep); color:var(--paper);}
+
+  /* journey rail */
+  .journey-rail{
+    display:flex; justify-content:space-between; margin-top:70px; padding-top:22px;
+    border-top:1px solid var(--line); z-index:2; position:relative; flex-wrap:wrap; gap:14px;
+  }
+  .journey-rail a{
+    font-size:12.5px; color:var(--indigo-deep); opacity:0.6; display:flex; align-items:center; gap:8px;
+  }
+  .journey-rail a:hover{opacity:1; color:var(--clay);}
+  .journey-rail .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+
+  section{padding:120px 8vw; position:relative;}
+  .kicker{
+    display:flex; align-items:center; gap:14px; margin-bottom:18px;
+  }
+  .kicker .num{
+    font-family:'Noto Serif Thai',serif; font-size:13px; color:var(--paper);
+    background:var(--clay); width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .kicker .tag{font-size:13px; letter-spacing:2px; color:var(--clay); text-transform:uppercase;}
+  .sec-title{font-size:clamp(28px,3.6vw,44px); max-width:16ch;}
+  .sec-desc{max-width:62ch; margin-top:16px; color:#4a3f31; font-size:16.5px;}
+  .sec-loc{
+    display:inline-block; margin-top:14px; font-size:12.5px; padding:6px 14px;
+    border:1px solid var(--line); border-radius:999px; color:var(--indigo-deep); opacity:0.75;
+  }
+
+  /* ================= SECTION 1: MAP ================= */
+  #map{background:linear-gradient(180deg, var(--plaster-warm), var(--paper));}
+  .map-wrap{
+    margin-top:56px; display:grid; grid-template-columns:1.6fr 1fr; gap:36px; align-items:start;
+  }
+  @media (max-width:880px){ .map-wrap{grid-template-columns:1fr;} }
+  .map-canvas{
+    background:var(--indigo); border-radius:22px; padding:22px; box-shadow:var(--shadow);
+    position:relative; overflow:hidden;
+  }
+  .map-canvas svg{width:100%; height:auto; display:block;}
+
+  .map-zone{fill:#EDE3D0; opacity:0.05;}
+  .map-zone-line{fill:none; stroke:rgba(237,227,208,0.16); stroke-width:1; stroke-dasharray:4 4;}
+  .map-river{fill:none; stroke:#5F93A8; stroke-linecap:round; opacity:0.55;}
+  .map-river-fill{fill:#3E6C82; opacity:0.28;}
+  .map-road{fill:none; stroke:rgba(237,227,208,0.3); stroke-width:2.2; stroke-linecap:round;}
+  .map-road-minor{fill:none; stroke:rgba(237,227,208,0.16); stroke-width:1.3; stroke-dasharray:1 6; stroke-linecap:round;}
+  .map-area-label{font-family:'Noto Serif Thai',serif; font-size:11px; fill:rgba(237,227,208,0.32); letter-spacing:1px;}
+
+  .map-route{
+    fill:none; stroke:var(--gold); stroke-width:2.4; stroke-linecap:round; stroke-dasharray:6 6;
+    opacity:0; transition:opacity .3s ease;
+  }
+  .map-route.show{ opacity:0.9; animation:dash 1.4s linear infinite; }
+  @keyframes dash{ to{ stroke-dashoffset:-24; } }
+
+  .map-pin{cursor:pointer;}
+  .map-pin circle.ring{fill:none; stroke:var(--gold); stroke-width:2; opacity:0; transform-origin:center;}
+  .map-pin.active circle.ring{animation:pulse 1.6s ease-out infinite;}
+  .map-pin circle.dot{fill:var(--clay-soft); stroke:var(--paper); stroke-width:2; transition:fill .2s, r .2s;}
+  .map-pin.active circle.dot{fill:var(--gold); r:9;}
+  .map-pin:hover circle.dot{fill:var(--gold);}
+  .map-pin .pin-num{
+    font-family:'Sarabun',sans-serif; font-weight:700; font-size:8.5px; fill:var(--indigo-deep);
+    text-anchor:middle; dominant-baseline:central; pointer-events:none;
+  }
+  .map-pin.start circle.dot{fill:var(--plaster-warm); r:6;}
+  .map-pin.start circle.outer{fill:none; stroke:var(--plaster-warm); stroke-width:1.4; opacity:0.6;}
+  @keyframes pulse{
+    0%{ r:9; opacity:0.7; }
+    100%{ r:22; opacity:0; }
+  }
+  .map-label{
+    font-family:'Sarabun',sans-serif; font-size:9.5px; fill:var(--plaster-warm); opacity:0.9; pointer-events:none;
+  }
+
+  .map-label.start-label{ fill:var(--gold); font-weight:700; }
+
+  .compass{ transform-origin:center; }
+  .compass text{ font-family:'Sarabun',sans-serif; font-size:10px; fill:rgba(237,227,208,0.55); text-anchor:middle;}
+  .scale-bar{ stroke:rgba(237,227,208,0.5); stroke-width:1.5;}
+  .scale-text{ font-family:'Sarabun',sans-serif; font-size:8.5px; fill:rgba(237,227,208,0.55);}
+
+  .map-legend{display:flex; gap:16px; margin-top:16px; flex-wrap:wrap;}
+  .map-legend span{font-size:11.5px; color:var(--plaster-warm); opacity:0.7; display:flex; align-items:center; gap:6px;}
+  .map-legend i{width:8px;height:8px;border-radius:50%; background:var(--clay-soft); display:inline-block;}
+  .map-legend i.start{background:var(--plaster-warm);}
+
+  .map-side{display:flex; flex-direction:column; gap:18px;}
+  .map-info{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:28px;
+    min-height:260px; display:flex; flex-direction:column; box-shadow:var(--shadow);
+  }
+  .map-info .placeholder{margin:auto; text-align:center; color:#7a6b57; font-size:14px; max-width:24ch;}
+  .map-info-tag{font-size:11.5px; letter-spacing:1.5px; color:var(--clay); text-transform:uppercase; margin-bottom:10px;}
+  .map-info h3{font-size:22px; margin-bottom:10px;}
+  .map-info p{font-size:14.5px; color:#4a3f31; margin-bottom:14px;}
+  .map-info .meta{display:flex; gap:18px; flex-wrap:wrap; margin-top:auto; padding-top:16px; border-top:1px solid var(--line);}
+  .map-info .meta div{font-size:12px; color:#7a6b57;}
+  .map-info .meta b{display:block; color:var(--indigo-deep); font-size:13.5px; font-family:'Noto Serif Thai',serif;}
+
+  .map-list{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:8px; box-shadow:var(--shadow);
+  }
+  .map-list-item{
+    display:flex; align-items:center; gap:14px; padding:13px 14px; border-radius:12px; cursor:pointer;
+    transition:background .2s;
+  }
+  .map-list-item:hover{background:var(--plaster-warm);}
+  .map-list-item.active{background:var(--plaster-warm);}
+  .map-list-item .badge{
+    width:26px; height:26px; border-radius:50%; background:var(--indigo); color:var(--plaster-warm);
+    font-family:'Noto Serif Thai',serif; font-size:12px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:background .2s;
+  }
+  .map-list-item.active .badge, .map-list-item:hover .badge{background:var(--clay);}
+  .map-list-item .txt{flex:1; min-width:0;}
+  .map-list-item .txt h5{font-family:'Noto Serif Thai',serif; font-size:14px; color:var(--indigo-deep); margin-bottom:2px;}
+  .map-list-item .txt span{font-size:11.5px; color:#7a6b57;}
+  .map-list-item .dist{font-size:11px; color:var(--clay); flex-shrink:0; text-align:right; white-space:nowrap;}
+
+  /* ================= SECTION 2: HERITAGE TIMELINE (motion) ================= */
+  #heritage{background:var(--indigo-deep); color:var(--plaster-warm);}
+  #heritage .sec-title, #heritage h3{color:var(--plaster-warm);}
+  #heritage .sec-desc{color:rgba(237,227,208,0.75);}
+  #heritage .sec-loc{color:var(--plaster-warm); border-color:rgba(237,227,208,0.25);}
+  .timeline{
+    margin-top:70px; display:flex; gap:0; overflow-x:auto; padding-bottom:24px;
+    scroll-snap-type:x proximity;
+  }
+  .timeline::-webkit-scrollbar{height:6px;}
+  .timeline::-webkit-scrollbar-thumb{background:var(--clay); border-radius:6px;}
+  .tl-item{
+    flex:0 0 auto; width:min(320px, 78vw); padding:0 26px 0 0; position:relative; scroll-snap-align:start;
+  }
+  .tl-item::before{
+    content:""; position:absolute; top:0; left:0; right:26px; height:2px; background:rgba(237,227,208,0.18);
+  }
+  .tl-item::after{
+    content:""; position:absolute; top:-5px; left:0; width:12px; height:12px; border-radius:50%;
+    background:var(--gold); box-shadow:0 0 0 4px rgba(201,162,39,0.2);
+  }
+  .tl-item{padding-top:32px;}
+  .tl-year{font-family:'Chonburi',cursive; font-size:15px; color:var(--gold); margin-bottom:10px; display:block;}
+  .tl-item h4{font-family:'Noto Serif Thai',serif; font-size:19px; margin-bottom:10px; color:var(--plaster-warm);}
+  .tl-item p{font-size:14px; color:rgba(237,227,208,0.7);}
+  .tl-hint{margin-top:18px; font-size:12.5px; color:rgba(237,227,208,0.45); display:flex; align-items:center; gap:8px;}
+  .tl-hint svg{width:16px;height:16px;}
+
+  /* ---- heritage info-motion video ---- */
+  .heritage-video{margin-top:56px; display:grid; grid-template-columns:1.5fr 1fr; gap:36px; align-items:center;}
+  @media (max-width:880px){ .heritage-video{grid-template-columns:1fr;} }
+  .hv-frame{
+    position:relative; border-radius:20px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    background:#000; border:1px solid rgba(237,227,208,0.12);
+  }
+  .hv-frame video{width:100%; display:block; aspect-ratio:16/9; background:#000;}
+  .hv-tag{
+    position:absolute; top:16px; left:16px; font-size:11px; letter-spacing:1.5px; color:var(--plaster-warm);
+    background:rgba(15,37,48,0.6); border:1px solid rgba(201,162,39,0.4); padding:5px 12px; border-radius:999px;
+    display:flex; align-items:center; gap:7px; z-index:2; backdrop-filter:blur(4px);
+  }
+  .hv-tag i{width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 8px 1px rgba(201,162,39,0.8);}
+  .hv-copy h3{font-size:21px; color:var(--plaster-warm); margin-bottom:12px;}
+  .hv-copy p{font-size:14.5px; color:rgba(237,227,208,0.68); margin-bottom:18px;}
+  .hv-meta{display:flex; gap:22px; flex-wrap:wrap; padding-top:16px; border-top:1px solid rgba(237,227,208,0.14);}
+  .hv-meta div{font-size:12px; color:rgba(237,227,208,0.55);}
+  .hv-meta b{display:block; font-family:'Noto Serif Thai',serif; font-size:14px; color:var(--gold); margin-bottom:2px;}
+
+  /* ================= SECTION 3: BOOK STORY ================= */
+  #culinary{background:linear-gradient(180deg, var(--paper), var(--plaster-warm));}
+  .book-wrap{margin-top:56px; display:grid; grid-template-columns:1.5fr 1fr; gap:36px; align-items:start;}
+  @media (max-width:880px){ .book-wrap{grid-template-columns:1fr;} }
+
+  .book{
+    position:relative; background:var(--indigo); border-radius:20px; padding:22px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .book-spread{
+    position:relative; background:var(--paper); border-radius:12px; overflow:hidden;
+    aspect-ratio:16/10; display:grid; grid-template-columns:1fr 1fr;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  @media (max-width:560px){ .book-spread{grid-template-columns:1fr; aspect-ratio:3/4;} }
+  .book-spine{
+    position:absolute; left:50%; top:0; bottom:0; width:34px; margin-left:-17px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.14), rgba(0,0,0,0.02) 30%, rgba(0,0,0,0.02) 70%, rgba(0,0,0,0.14));
+    z-index:3; pointer-events:none;
+  }
+  @media (max-width:560px){ .book-spine{display:none;} }
+  .book-page{
+    position:relative; padding:26px 30px; display:flex; flex-direction:column; justify-content:center;
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .book-page.illus{background:var(--plaster-warm); align-items:center; justify-content:center; padding:18px;}
+  .book-page.illus svg{width:100%; height:100%; max-height:280px;}
+  .book-fade{opacity:0; transform:translateY(6px);}
+  .bp-tag{font-size:10.5px; letter-spacing:1.8px; color:var(--clay); text-transform:uppercase; margin-bottom:10px;}
+  .bp-title{font-family:'Noto Serif Thai',serif; font-size:20px; color:var(--indigo-deep); margin-bottom:10px; line-height:1.3;}
+  .bp-desc{font-size:13.5px; color:#4a3f31; line-height:1.75;}
+  .bp-chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .bp-chips span{font-size:11px; padding:4px 11px; border-radius:999px; border:1px solid var(--line); color:var(--indigo-deep); opacity:0.75;}
+  .bp-folio{position:absolute; bottom:14px; font-family:'Chonburi',cursive; font-size:11px; color:var(--clay); opacity:0.6;}
+  .book-page.illus .bp-folio{left:18px;}
+  .book-page:not(.illus) .bp-folio{right:18px;}
+
+  .book-nav{display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding:0 4px;}
+  .book-arrow{
+    width:42px; height:42px; border-radius:50%; background:var(--indigo-deep); border:1px solid rgba(237,227,208,0.15);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .2s, transform .2s;
+    flex-shrink:0;
+  }
+  .book-arrow svg{width:16px; height:16px; stroke:var(--plaster-warm);}
+  .book-arrow:hover{background:var(--clay);}
+  .book-arrow.disabled{opacity:0.3; pointer-events:none;}
+  .book-dots{display:flex; gap:8px;}
+  .book-dots span{width:7px; height:7px; border-radius:50%; background:rgba(237,227,208,0.25); cursor:pointer; transition:background .2s, transform .2s;}
+  .book-dots span.active{background:var(--gold); transform:scale(1.3);}
+
+  .story-list{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:8px; box-shadow:var(--shadow);
+  }
+  .story-list-item{
+    display:flex; align-items:center; gap:14px; padding:13px 14px; border-radius:12px; cursor:pointer; transition:background .2s;
+  }
+  .story-list-item:hover, .story-list-item.active{background:var(--plaster-warm);}
+  .story-list-item .badge{
+    width:30px; height:30px; border-radius:9px; background:var(--indigo); color:var(--plaster-warm);
+    font-family:'Noto Serif Thai',serif; font-size:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:background .2s;
+  }
+  .story-list-item.active .badge, .story-list-item:hover .badge{background:var(--clay);}
+  .story-list-item .txt h5{font-family:'Noto Serif Thai',serif; font-size:14px; color:var(--indigo-deep); margin-bottom:2px;}
+  .story-list-item .txt span{font-size:11.5px; color:#7a6b57;}
+
+  /* ================= SECTION 4: WISDOM INFOGRAPHIC ================= */
+  #wisdom{background:var(--plaster-warm);}
+  .wisdom-cover{
+    margin-top:56px; border-radius:22px; overflow:hidden; box-shadow:var(--shadow);
+    border:1px solid var(--line);
+  }
+  .wisdom-cover img{width:100%; display:block;}
+
+  .wisdom-wrap{margin-top:36px; display:grid; grid-template-columns:1.4fr 1fr; gap:36px; align-items:start;}
+  @media (max-width:900px){ .wisdom-wrap{grid-template-columns:1fr;} }
+
+  .wisdom-frame{
+    position:relative; background:var(--indigo); border-radius:22px; padding:22px;
+    box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center;
+    min-height:320px;
+  }
+  .wf-tag{
+    position:absolute; top:18px; left:18px; font-size:11px; letter-spacing:1.5px; color:var(--plaster-warm);
+    background:rgba(15,37,48,0.6); border:1px solid rgba(201,162,39,0.4); padding:5px 12px; border-radius:999px;
+    z-index:3; backdrop-filter:blur(4px);
+  }
+  .wf-imgbox{
+    position:relative; border-radius:12px; overflow:hidden; max-height:640px; cursor:zoom-in;
+    box-shadow:0 14px 34px rgba(0,0,0,0.35);
+  }
+  .wf-imgbox img{
+    display:block; max-height:640px; width:auto; max-width:100%; margin:0 auto; transition:opacity .35s ease;
+  }
+  .wf-zoom{
+    position:absolute; bottom:14px; right:14px; width:38px; height:38px; border-radius:50%;
+    background:rgba(15,37,48,0.65); border:1px solid rgba(237,227,208,0.25); display:flex; align-items:center;
+    justify-content:center; z-index:3; pointer-events:none;
+  }
+  .wf-zoom svg{width:16px; height:16px; stroke:var(--plaster-warm);}
+  .wf-fade{opacity:0;}
+
+  .wisdom-side{display:flex; flex-direction:column; gap:18px;}
+  .wisdom-info{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:26px; box-shadow:var(--shadow);
+  }
+  .wi-tag{font-size:11.5px; letter-spacing:1.5px; color:var(--clay); text-transform:uppercase; margin-bottom:10px;}
+  .wisdom-info h3{font-size:20px; margin-bottom:10px;}
+  .wisdom-info p{font-size:14px; color:#4a3f31; line-height:1.75;}
+  .wi-chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px;}
+  .wi-chips span{font-size:11px; padding:4px 11px; border-radius:999px; border:1px solid var(--line); color:var(--indigo-deep); opacity:0.8;}
+
+  .era-list{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:8px; box-shadow:var(--shadow);
+  }
+  .era-item{
+    display:flex; align-items:center; gap:14px; padding:12px 14px; border-radius:12px; cursor:pointer; transition:background .2s;
+  }
+  .era-item:hover, .era-item.active{background:var(--plaster-warm);}
+  .era-item .thumb{
+    width:42px; height:56px; border-radius:8px; overflow:hidden; flex-shrink:0; background:var(--indigo);
+    border:1px solid var(--line);
+  }
+  .era-item .thumb img{width:100%; height:100%; object-fit:cover; object-position:top;}
+  .era-item .txt h5{font-family:'Noto Serif Thai',serif; font-size:14px; color:var(--indigo-deep); margin-bottom:2px;}
+  .era-item .txt span{font-size:11.5px; color:#7a6b57;}
+
+  /* lightbox */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(15,37,48,0.92); z-index:200; display:none;
+    align-items:center; justify-content:center; padding:5vh 4vw; backdrop-filter:blur(4px);
+  }
+  .lightbox.show{display:flex;}
+  .lightbox img{max-width:100%; max-height:90vh; border-radius:8px; box-shadow:0 30px 70px rgba(0,0,0,0.5);}
+  .lightbox-close{
+    position:absolute; top:24px; right:28px; width:44px; height:44px; border-radius:50%;
+    background:rgba(237,227,208,0.12); border:1px solid rgba(237,227,208,0.3); display:flex;
+    align-items:center; justify-content:center; cursor:pointer;
+  }
+  .lightbox-close svg{width:18px; height:18px; stroke:var(--plaster-warm);}
+
+  /* ================= SECTION 5: MURAL INTERACTIVE VISUAL STORYTELLING ================= */
+  #mural{background:var(--indigo-deep); color:var(--plaster-warm); overflow:hidden;}
+  #mural .sec-title, #mural h3{color:var(--plaster-warm);}
+  #mural .sec-desc{color:rgba(237,227,208,0.75);}
+  #mural .sec-loc{color:var(--plaster-warm); border-color:rgba(237,227,208,0.25);}
+  #mural .wisdom-cover{margin-top:56px;}
+  #mural .wisdom-cover svg{width:100%; display:block;}
+  #mural .era-item .txt h5{color:var(--indigo-deep);}
+  .wf-imgbox-row{display:flex; gap:14px; width:100%; transition:opacity .3s ease;}
+  .wf-imgbox-row .wf-imgbox{
+    flex:1; max-height:none; height:280px; margin:0; cursor:default; background:var(--indigo-deep);
+  }
+  .wf-imgbox-row .wf-imgbox svg{width:100%; height:100%; display:block; max-height:none;}
+  .wb-label{
+    position:absolute; bottom:0; left:0; right:0; padding:8px 10px; font-size:10px; letter-spacing:1px;
+    color:var(--plaster-warm); background:linear-gradient(0deg, rgba(15,37,48,0.85), transparent);
+    text-align:center; text-transform:uppercase; z-index:2;
+  }
+  @media (max-width:560px){
+    .wf-imgbox-row{flex-direction:column;}
+    .wf-imgbox-row .wf-imgbox{height:220px;}
+  }
+  .era-item .thumb svg{width:100%; height:100%; display:block;}
+
+  /* ===== 05 upgraded viewer (real wall images + floor plan) ===== */
+  #mural .wisdom-info h3{color:var(--indigo-deep);}
+  .mural-intro{margin-top:48px; display:grid; grid-template-columns:minmax(200px,290px) 1fr; gap:44px; align-items:center;}
+  @media (max-width:700px){ .mural-intro{grid-template-columns:1fr; justify-items:center; gap:26px;} }
+  .mi-cover{margin:0; width:100%; max-width:290px; border-radius:14px; overflow:hidden; border:1px solid rgba(201,162,39,0.4); box-shadow:0 24px 60px rgba(0,0,0,0.45); cursor:zoom-in; transition:transform .3s;}
+  .mi-cover:hover{transform:translateY(-4px) rotate(-0.6deg);}
+  .mi-cover img{display:block; width:100%; height:auto;}
+  .mi-text{align-self:center;}
+  .mi-text h3{font-size:clamp(22px,3vw,30px); margin-bottom:12px;}
+  .mi-text p{color:rgba(237,227,208,0.78); line-height:1.85; font-size:15px; max-width:58ch;}
+  .mi-stats{display:flex; gap:30px; flex-wrap:wrap; margin:22px 0 26px;}
+  .mi-stats b{display:block; font-family:'Noto Serif Thai',serif; font-size:36px; line-height:1; color:var(--gold); font-weight:600;}
+  .mi-stats span{font-size:12px; letter-spacing:.6px; opacity:.75;}
+
+  .wall-viewer{margin-top:52px; display:grid; grid-template-columns:1.35fr 1fr; gap:32px; align-items:start;}
+  @media (max-width:900px){ .wall-viewer{grid-template-columns:1fr;} }
+  .wall-col{min-width:0;}
+  .wall-stage{background:var(--indigo); border-radius:22px; padding:22px; box-shadow:var(--shadow);}
+  .wall-stage .wf-tag{position:static; display:inline-block; margin-bottom:14px;}
+  .wall-imgbox{position:relative; border-radius:12px; overflow:hidden; background:var(--indigo-deep); cursor:zoom-in; box-shadow:0 14px 34px rgba(0,0,0,0.35); aspect-ratio:4/5; max-height:84vh; width:min(100%, calc(84vh * 0.8)); margin:0 auto; transition:opacity .25s ease;}
+  .wall-imgbox img{width:100%; height:100%; object-fit:contain; display:block;}
+  .wall-imgbox.fade{opacity:0;}
+  .wall-ph{position:absolute; inset:0; display:none;}
+  .wall-ph svg{width:100%; height:100%; display:block; opacity:.5;}
+  .wall-ph-note{position:absolute; left:50%; bottom:18px; transform:translateX(-50%); white-space:nowrap; font-size:12px; letter-spacing:.6px; padding:6px 14px; border-radius:999px; background:rgba(15,37,48,0.8); border:1px solid rgba(201,162,39,0.4); color:var(--plaster-warm);}
+  .wall-imgbox.noimg{cursor:default;}
+  .wall-imgbox.noimg img, .wall-imgbox.noimg .wf-zoom{display:none;}
+  .wall-imgbox.noimg .wall-ph{display:block;}
+  .wall-nav{display:flex; align-items:center; justify-content:space-between; margin-top:16px;}
+  .wall-count{font-size:12px; letter-spacing:1.5px; color:var(--plaster-warm); opacity:.8;}
+
+  .wall-strip{margin-top:20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(104px,1fr)); gap:12px;}
+  .ws-item{background:var(--indigo); border:1px solid rgba(237,227,208,0.12); border-radius:12px; overflow:hidden; cursor:pointer; transition:transform .2s, border-color .2s;}
+  .ws-item:hover{transform:translateY(-3px);}
+  .ws-item.active{border-color:var(--gold); box-shadow:0 0 0 1px var(--gold);}
+  .ws-thumb{position:relative; aspect-ratio:1/1; background:var(--indigo-deep);}
+  .ws-thumb img, .ws-thumb svg{width:100%; height:100%; display:block; object-fit:cover; object-position:center 28%;}
+  .ws-item.noimg .ws-thumb svg{opacity:.45;}
+  .ws-num{position:absolute; top:6px; left:6px; min-width:22px; height:22px; padding:0 6px; border-radius:11px; background:var(--gold); color:var(--indigo-deep); font-size:11px; font-weight:600; display:flex; align-items:center; justify-content:center;}
+  .ws-t{padding:8px 9px 10px; font-size:11.5px; line-height:1.4; color:var(--plaster-warm); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:calc(2.8em + 18px);}
+  .ws-item.noimg .ws-t{opacity:.55;}
+
+  .wall-side{display:flex; flex-direction:column; gap:20px; min-width:0;}
+  .wi-virtue{font-family:'Noto Serif Thai',serif; font-size:13.5px; color:var(--clay); margin:-4px 0 12px;}
+  .wi-lead{font-size:14.5px; color:var(--indigo-deep); line-height:1.8; padding-left:12px; border-left:3px solid var(--gold); margin-bottom:12px;}
+  .plan-card{background:var(--indigo); border-radius:18px; padding:18px 18px 14px; box-shadow:var(--shadow); text-align:center;}
+  .plan-card h4{font-size:12.5px; letter-spacing:1.5px; color:var(--plaster-warm); margin-bottom:10px; font-weight:500;}
+  .plan-card svg{display:block; margin:0 auto; width:100%; max-width:300px; max-height:540px; height:auto;}
+  .plan-hint{font-size:11px; opacity:.6; margin-top:8px;}
+  .pm{cursor:pointer;}
+  .pm .c{fill:#0F2530; stroke:var(--gold); stroke-width:3; transition:fill .2s;}
+  .pm:hover .c{fill:#7A2331;}
+  .pm.noimg .c{stroke-dasharray:6 4;}
+  .pm text{fill:var(--gold); font-size:25px; font-weight:600; text-anchor:middle; dominant-baseline:central; pointer-events:none;}
+  .pm.active .c{fill:var(--gold);}
+  .pm.active text{fill:#0F2530;}
+  .pm .ring{fill:none; stroke:var(--gold); stroke-width:3; opacity:0; transform-box:fill-box; transform-origin:center;}
+  .pm.active .ring{animation:pmPulse 1.6s ease-out infinite;}
+  @keyframes pmPulse{0%{transform:scale(1); opacity:.9;} 100%{transform:scale(1.9); opacity:0;}}
+  .plan-lbl{fill:rgba(237,227,208,0.8); font-size:32px; text-anchor:middle; letter-spacing:1px;}
+
+  /* ================= ABOUT PROJECT ================= */
+  #about{
+    background:var(--plaster); border-top:1px solid var(--line);
+  }
+  .about-head{max-width:70ch;}
+  .about-project-title{
+    font-family:'Noto Serif Thai', serif; font-weight:600; font-size:clamp(20px,2.6vw,27px);
+    line-height:1.55; color:var(--indigo-deep); margin-top:16px;
+  }
+  .about-grid{
+    margin-top:56px; display:grid; grid-template-columns:1fr 1.3fr; gap:48px; align-items:start;
+  }
+  @media (max-width:880px){ .about-grid{grid-template-columns:1fr; gap:34px;} }
+  .about-seal{
+    aspect-ratio:1/1; border-radius:50%; border:1.5px solid var(--clay);
+    display:flex; align-items:center; justify-content:center; position:relative; max-width:260px;
+  }
+  .about-seal::before{
+    content:""; position:absolute; inset:14px; border:1px dashed rgba(122,35,49,0.4); border-radius:50%;
+  }
+  .about-seal-inner{text-align:center; padding:20px;}
+  .about-seal-inner .yr{font-family:'Chonburi',cursive; font-size:30px; color:var(--lacquer);}
+  .about-seal-inner .lbl{font-size:11.5px; color:var(--indigo-deep); opacity:0.65; margin-top:6px; letter-spacing:1px;}
+
+  .about-rows{border-top:1px solid var(--line);}
+  .about-row{
+    display:grid; grid-template-columns:180px 1fr; gap:24px; padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:600px){ .about-row{grid-template-columns:1fr; gap:6px;} }
+  .about-row .k{font-size:12.5px; letter-spacing:1px; color:var(--clay); text-transform:uppercase; padding-top:2px;}
+  .about-row .v{font-size:15.5px; color:var(--ink);}
+  .about-row .v small{display:block; font-size:13px; color:#7a6b57; margin-top:4px;}
+
+  .about-note{
+    margin-top:44px; padding:24px 28px; background:var(--paper); border:1px solid var(--line); border-radius:16px;
+    font-size:13.5px; color:#5a4d3c; max-width:74ch;
+  }
+
+  /* footer */
+  footer{
+    padding:60px 8vw 40px; background:var(--indigo-deep); color:rgba(237,227,208,0.55);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; font-size:13px;
+    border-top:1px solid rgba(237,227,208,0.08);
+  }
+  footer b{color:var(--plaster-warm); font-family:'Noto Serif Thai',serif; font-weight:600;}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.show{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">รามัญวิถี <span>โพธาราม</span></div>
+  <ul class="nav-links">
+    <li><a href="#map"><span class="n">01</span>แผนที่</a></li>
+    <li><a href="#heritage"><span class="n">02</span>มรดก</a></li>
+    <li><a href="#culinary"><span class="n">03</span>รสชาติ</a></li>
+    <li><a href="#wisdom"><span class="n">04</span>ภูมิปัญญา</a></li>
+    <li><a href="#mural"><span class="n">05</span>จิตรกรรม</a></li>
+    <li><a href="#about">เกี่ยวกับโครงการ</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <svg class="hero-mural" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <lineargradient id="mgrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#EDE3D0" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#C1662F" stop-opacity="0.06"/>
+      </lineargradient>
+    </defs>
+    <rect width="1400" height="900" fill="url(#mgrad)"/>
+    <g opacity="0.5" stroke="#1B3A4B" stroke-width="1.4" fill="none">
+      <path d="M1050 60 C 1180 140, 1220 260, 1150 380 C 1080 500, 1140 620, 1260 700"/>
+      <path d="M1150 40 q 60 90 -10 170 q -70 80 20 160"/>
+    </g>
+    <g opacity="0.35">
+      <circle cx="1230" cy="130" r="60" fill="none" stroke="#C9A227" stroke-width="1.6"/>
+      <circle cx="1230" cy="130" r="42" fill="none" stroke="#C9A227" stroke-width="1"/>
+    </g>
+  </svg>
+  <span class="hero-eyebrow">อำเภอโพธาราม · จังหวัดราชบุรี</span>
+  <h1 class="hero-title">สัมผัสลมหายใจ<br><em>รามัญ</em> แห่งแม่กลอง</h1>
+  <p class="hero-sub">ชุดสื่อดิจิทัลผสมผสาน 5 รูปแบบ ที่พาคุณเดินตามรอยชุมชนมอญโพธาราม ตั้งแต่แผนที่นำทาง เรื่องเล่าประวัติศาสตร์ อาหารผ่าน E-Menu ภูมิปัญญาชาวนา ไปจนถึงจิตรกรรมฝาผนังที่ถอดรหัสผ่าน Interactive Visual Storytelling — ออกแบบเพื่อการท่องเที่ยวเชิงวัฒนธรรมอย่างยั่งยืน</p>
+
+  <div class="hero-scope">
+    <div><b>5</b>ชุดสื่อดิจิทัล</div>
+    <div><b>3</b>ตำบลในพื้นที่ศึกษา</div>
+    <div><b>1</b>เส้นทางเดียว เล่าเรื่องมอญ</div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#map" class="btn btn-solid">เริ่มออกเดินทาง</a>
+    <a href="#mural" class="btn btn-line">สำรวจจิตรกรรมแบบ Interactive</a>
+  </div>
+
+  <div class="journey-rail">
+    <a href="#map"><span class="dot"></span>01 แผนที่เส้นทาง</a>
+    <a href="#heritage"><span class="dot"></span>02 เส้นทางมรดกมอญ</a>
+    <a href="#culinary"><span class="dot"></span>03 รสชาติมอญแท้</a>
+    <a href="#wisdom"><span class="dot"></span>04 ภูมิปัญญามอญ</a>
+    <a href="#mural"><span class="dot"></span>05 สีสันแห่งธรรม</a>
+  </div>
+</header>
+
+<!-- ================= 01 MAP ================= -->
+<section id="map">
+  <div class="reveal">
+    <div class="kicker"><span class="num">01</span><span class="tag">Interactive Map</span></div>
+    <h2 class="sec-title">แผนที่เส้นทางท่องเที่ยววัฒนธรรมมอญ</h2>
+    <p class="sec-desc">แผนที่ดิจิทัลแบบปฏิสัมพันธ์ แตะหมุดหรือเลือกจากรายการ เพื่อสำรวจชุมชนมอญ วัดมอญ และศูนย์วัฒนธรรมพื้นถิ่นทั่วอำเภอโพธาราม พร้อมระยะทางและเวลาแนะนำ นับจากจุดเริ่มต้นเส้นทาง</p>
+    <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: อำเภอโพธาราม</span>
+  </div>
+
+  <div class="map-wrap reveal">
+    <div class="map-canvas">
+      <svg viewBox="0 0 640 460" id="mapSvg">
+        <!-- zoning / sub-district guide lines -->
+        <path class="map-zone-line" d="M0 210 C 160 190, 260 240, 340 200 C 440 150, 540 170, 640 140"/>
+        <text class="map-area-label" x="70" y="90">ต.คลองตาคต</text>
+        <text class="map-area-label" x="470" y="130">ต.เตาปูน</text>
+        <text class="map-area-label" x="270" y="410">ต.โพธาราม</text>
+
+        <!-- river -->
+        <path class="map-river-fill" d="M10 40 C 130 90, 110 170, 210 210 C 330 255, 320 330, 450 372 C 512 392, 555 410, 630 432
+                                          L 640 460 L 0 460 L 0 60 Z" opacity="0"/>
+        <path class="map-river" d="M20 55 C 140 100, 118 178, 218 218 C 338 262, 328 336, 458 378 C 518 398, 558 416, 628 438" stroke-width="14"/>
+        <path class="map-river" d="M20 55 C 140 100, 118 178, 218 218 C 338 262, 328 336, 458 378 C 518 398, 558 416, 628 438" stroke-width="2" stroke="#EDE3D0" opacity="0.25"/>
+        <text class="map-area-label" x="60" y="42" opacity="0.4">แม่น้ำแม่กลอง</text>
+
+        <!-- road network -->
+        <path class="map-road" d="M60 380 C 150 300, 260 260, 340 180 C 400 120, 470 90, 580 50"/>
+        <path class="map-road" d="M120 60 C 200 140, 260 200, 300 300 C 320 350, 360 390, 420 420"/>
+        <path class="map-road-minor" d="M150 150 C 220 170, 260 195, 300 300"/>
+        <path class="map-road-minor" d="M300 300 C 360 330, 420 350, 500 370"/>
+        <path class="map-road-minor" d="M150 150 C 260 165, 350 175, 430 190"/>
+
+        <!-- suggested route (drawn on selection) -->
+        <path class="map-route" id="routeLine" d=""/>
+
+        <!-- compass -->
+        <g class="compass" transform="translate(580,395)">
+          <circle r="22" fill="none" stroke="rgba(237,227,208,0.3)" stroke-width="1"/>
+          <path d="M0 -16 L5 0 L0 16 L-5 0 Z" fill="var(--gold)" opacity="0.85"/>
+          <text y="-26">N</text>
+        </g>
+        <!-- scale -->
+        <g transform="translate(40,428)">
+          <line class="scale-bar" x1="0" y1="0" x2="60" y2="0"/>
+          <line class="scale-bar" x1="0" y1="-4" x2="0" y2="4"/>
+          <line class="scale-bar" x1="60" y1="-4" x2="60" y2="4"/>
+          <text class="scale-text" x="30" y="16" text-anchor="middle">≈ 2 กม.</text>
+        </g>
+
+        <!-- pins -->
+        <g class="map-pin start" data-id="0" transform="translate(150,150)">
+          <circle class="outer" r="13"/>
+          <circle class="ring" r="9"/>
+          <circle class="dot" r="6"/>
+        </g>
+        <text class="map-label start-label" x="150" y="130" text-anchor="middle">① ศูนย์วัฒนธรรมมอญ · เริ่มที่นี่</text>
+
+        <g class="map-pin" data-id="1" transform="translate(300,300)">
+          <circle class="ring" r="9"/>
+          <circle class="dot" r="8"/>
+          <text class="pin-num">2</text>
+        </g>
+        <text class="map-label" x="300" y="282" text-anchor="middle">วัดคงคาราม</text>
+
+        <g class="map-pin" data-id="2" transform="translate(230,220)">
+          <circle class="ring" r="9"/>
+          <circle class="dot" r="8"/>
+          <text class="pin-num">3</text>
+        </g>
+        <text class="map-label" x="230" y="202" text-anchor="middle">ชุมชนมอญบ้านม่วง</text>
+
+        <g class="map-pin" data-id="3" transform="translate(430,190)">
+          <circle class="ring" r="9"/>
+          <circle class="dot" r="8"/>
+          <text class="pin-num">4</text>
+        </g>
+        <text class="map-label" x="430" y="172" text-anchor="middle">บ้านเนินหนองบัว</text>
+
+        <g class="map-pin" data-id="4" transform="translate(500,370)">
+          <circle class="ring" r="9"/>
+          <circle class="dot" r="8"/>
+          <text class="pin-num">5</text>
+        </g>
+        <text class="map-label" x="500" y="352" text-anchor="middle">ตลาดน้ำวัดโบสถ์</text>
+      </svg>
+      <div class="map-legend">
+        <span><i class="start"></i>จุดเริ่มต้นเส้นทาง</span>
+        <span><i></i>แตะหมุดเพื่อดูรายละเอียด</span>
+        <span style="opacity:0.5">เส้นประสีทอง = เส้นทางแนะนำจากจุดเริ่มต้น</span>
+      </div>
+    </div>
+
+    <div class="map-side">
+      <div class="map-info" id="mapInfo">
+        <div class="placeholder">เลือกหมุดบนแผนที่ หรือรายการด้านล่าง เพื่อดูระยะทางและเวลาแนะนำของแต่ละสถานที่</div>
+      </div>
+      <div class="map-list" id="mapList"></div>
+    </div>
+  </div>
+	  <div class="GIS MAP">
+    <div><b>แผนที่ดิจิทัล แผนที่เส้นทางท่องเที่ยววัฒนธรรมมอญ</b></div>
+    <div><b>อำเภอโพธาราม</b></div>
+     </div>
+	<div class="map-embed">
+  <iframe 
+    src="https://chulagis.maps.arcgis.com/apps/instant/nearby/index.html?appid=0dc96526d24046789c81e4c125a39fd7" 
+    width="100%" 
+    height="600" 
+    frameborder="8px" 
+    style="border:0" background-color= "#fffef8" box-shadow = "0 4px 12px rgba(0,0,0,0.15)"
+    allowfullscreen>
+  </iframe>
+</div>
+</section>
+
+<!-- ================= 02 HERITAGE ================= -->
+<section id="heritage">
+  <div class="reveal">
+    <div class="kicker"><span class="num" style="background:var(--gold); color:var(--indigo-deep);">02</span><span class="tag" style="color:var(--gold)">Info-Motion Graphic</span></div>
+    <h2 class="sec-title">เส้นทางมรดกมอญ</h2>
+    <p class="sec-desc">สื่อกราฟิกเคลื่อนไหวบอกเล่าประวัติความเป็นมาของชาวมอญ ตั้งแต่การอพยพเข้าสู่ลุ่มแม่น้ำแม่กลอง จนถึงการตั้งถิ่นฐานที่โพธารามในปัจจุบัน — เลื่อนดูเส้นเวลาด้านล่าง</p>
+    <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: อำเภอโพธาราม</span>
+  </div>
+
+  <div class="heritage-video reveal">
+    <div class="hv-frame">
+      <span class="hv-tag"><i></i>Info-Motion Graphic</span>
+      <video controls preload="metadata" poster="assets/heritage-poster.jpg" playsinline>
+        <source src="assets/mon-heritage-motion.mp4" type="video/mp4">
+        ขออภัย เบราว์เซอร์ของคุณไม่รองรับการเล่นวิดีโอ
+      </video>
+    </div>
+    <div class="hv-copy">
+      <h3>ชมคลิปเส้นทางมรดกมอญฉบับเต็ม</h3>
+      <p>สื่อกราฟิกเคลื่อนไหวความยาวเต็ม บอกเล่าการอพยพ ตั้งถิ่นฐาน และสืบสานวัฒนธรรมมอญแห่งโพธาราม ผลิตขึ้นเป็นส่วนหนึ่งของชุดสื่อดิจิทัลที่ 2 ของโครงการ</p>
+      <div class="hv-meta">
+        <div><b>3:38 นาที</b>ความยาว</div>
+        <div><b>Info-Motion</b>รูปแบบสื่อ</div>
+        <div><b>ชุดสื่อที่ 2</b>อ้างอิงโครงการ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline reveal" id="timeline">
+    <div class="tl-item">
+      <span class="tl-year">พุทธศตวรรษที่ 24</span>
+      <h4>การอพยพครั้งใหญ่</h4>
+      <p>ชาวมอญอพยพจากเมืองเมาะตะมะเข้าสู่สยาม หนีภัยสงคราม ตั้งถิ่นฐานตามลุ่มแม่น้ำสำคัญ</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">รัชกาลที่ 1–3</span>
+      <h4>ตั้งถิ่นฐานลุ่มแม่กลอง</h4>
+      <p>กลุ่มมอญบางส่วนเลือกลุ่มน้ำแม่กลองที่โพธาราม เพราะภูมิประเทศคล้ายบ้านเกิด เหมาะแก่การทำนา</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">พุทธศตวรรษที่ 25</span>
+      <h4>สร้างวัดและชุมชน</h4>
+      <p>ก่อตั้งวัดคงคารามและวัดมอญอื่น ๆ เป็นศูนย์กลางศรัทธาและศิลปวัฒนธรรมของชุมชน</p>
+    </div>
+    <div class="tl-item">
+      <span class="tl-year">ปัจจุบัน</span>
+      <h4>สืบสานผ่านคนรุ่นใหม่</h4>
+      <p>ประเพณีสงกรานต์มอญ ภาษา และหัตถกรรม ยังคงสืบทอดควบคู่กับการท่องเที่ยวเชิงวัฒนธรรม</p>
+    </div>
+  </div>
+  <div class="tl-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    เลื่อนเพื่อดูเส้นเวลาต่อ
+  </div>
+</section>
+
+<!-- ================= 03 CULINARY ================= -->
+<section id="culinary">
+  <div class="reveal">
+    <div class="kicker"><span class="num">03</span><span class="tag">E-Menu</span></div>
+    <h2 class="sec-title">รสชาติมอญแท้</h2>
+    <p class="sec-desc">หนังสือภาพเล่าเรื่องราวอาหารมอญและวัฒนธรรมการกิน ผ่านครัวเรือนและตลาดในชุมชน พลิกหน้าหนังสือหรือเลือกจากรายการ เพื่ออ่านเรื่องราวเบื้องหลังแต่ละเมนู</p>
+    <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: อำเภอโพธาราม</span>
+  </div>
+
+  <div class="book-wrap reveal">
+    <div class="book">
+      <div class="book-spread" id="bookSpread">
+        <div class="book-page illus" id="bookIllus">
+          <svg viewBox="0 0 300 300"></svg>
+          <span class="bp-folio" id="bookFolioL"></span>
+        </div>
+        <div class="book-page" id="bookText">
+          <div class="bp-tag" id="bpTag"></div>
+          <h4 class="bp-title" id="bpTitle"></h4>
+          <p class="bp-desc" id="bpDesc"></p>
+          <div class="bp-chips" id="bpChips"></div>
+          <span class="bp-folio" id="bookFolioR"></span>
+        </div>
+        <div class="book-spine"></div>
+      </div>
+      <div class="book-nav">
+        <div class="book-arrow" id="bookPrev"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></div>
+        <div class="book-dots" id="bookDots"></div>
+        <div class="book-arrow" id="bookNext"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="story-list" id="storyList"></div>
+  </div>
+
+  <!-- หรือฝังเป็น iframe -->
+  <div class="ebook-embed">
+    <iframe src="https://heyzine.com/flip-book/2b8fd931e1.html" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+  </div>
+ <!-- ปุ่มเปิด E-Menu -->
+  <div class="ebook-link">
+    <a href="https://heyzine.com/flip-book/2b8fd931e1.html" target="_blank" class="btn-ebook">
+      📖 เปิดอ่าน E-MENU รสชาติมอญ
+    </a>
+  </div>
+</section>
+
+
+<!-- ================= 04 WISDOM ================= -->
+<section id="wisdom">
+  <div class="reveal">
+    <div class="kicker"><span class="num">04</span><span class="tag">Infographic</span></div>
+    <h2 class="sec-title">ภูมิปัญญาการปลูกข้าว ตำบลเตาปูน</h2>
+    <p class="sec-desc">ตำบลเตาปูนมีสภาพพื้นที่ราบลุ่มถึงราบเนินเขา ดินร่วนอุดมสมบูรณ์และมีน้ำจากโครงการชลประทานสายใหญ่ ทำให้ประชาชนกว่าร้อยละ 80 ประกอบอาชีพทำนา ย้อนไปกว่า 150–170 ปี บรรพบุรุษเริ่มตั้งถิ่นฐานจากการเลี้ยงวัวและทำนาเพื่อยังชีพ ก่อนจะพัฒนาการปลูกข้าวต่อเนื่องมาทั้งหมด 4 ยุค</p>
+    <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: ตำบลเตาปูน อำเภอโพธาราม</span>
+  </div>
+
+  <div class="wisdom-cover reveal">
+    <img src="assets/wisdom-cover.jpg" alt="ภูมิปัญญาการปลูกข้าว ตำบลเตาปูน">
+  </div>
+
+  <div class="wisdom-wrap reveal">
+    <div class="wisdom-frame">
+      <span class="wf-tag" id="wfTag">ยุคที่ 1 · เกษตรธรรมชาติ</span>
+      <div class="wf-imgbox" id="wfImgBox">
+        <img id="wisdomImg" src="assets/wisdom-era1.jpg" alt="ยุคที่ 1 เกษตรธรรมชาติ">
+        <div class="wf-zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></div>
+      </div>
+    </div>
+
+    <div class="wisdom-side">
+      <div class="wisdom-info" id="wisdomInfo"></div>
+      <div class="era-list" id="eraList"></div>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" id="lightboxClose"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+  <img id="lightboxImg" src="lightbox" alt="">
+</div>
+
+<!-- ================= 05 MURAL INTERACTIVE VISUAL STORYTELLING ================= -->
+<section id="mural">
+  <div class="reveal">
+    <div class="kicker"><span class="num" style="background:var(--gold); color:var(--indigo-deep);">05</span><span class="tag" style="color:var(--gold)">Interactive Visual Storytelling</span></div>
+    <h2 class="sec-title">สีสันแห่งธรรม — จิตรกรรมฝาผนังมอญ</h2>
+    <p class="sec-desc">อ่านและถอดรหัสจิตรกรรมฝาผนังพื้นหลังสีครามอันเลื่องชื่อของวัดคงคาราม ผ่านการเล่าเรื่องด้วยภาพแบบ Interactive Visual Storytelling ที่เรียบเรียงเรื่องราวทศชาติชาดกและคติธรรมประจำแต่ละผนัง เลือกผนังจากผังพระอุโบสถหรือแถบภาพ เพื่อสำรวจความหมายเบื้องหลังภาพวาดแต่ละจุดในพระอุโบสถ</p>
+    <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: วัดคงคาราม ตำบลคลองตาคต อำเภอโพธาราม</span>
+  </div>
+
+  <!-- intro: storytelling cover -->
+  <div class="mural-intro reveal">
+    <figure class="mi-cover" id="muralCover">
+      <img src="assets/mural-cover.jpg" alt="ปกชุดสื่อ Interactive Visual Storytelling มรดกศิลป์แห่งศรัทธา: จิตรกรรมฝาผนังวัดคงคาราม" loading="lazy">
+    </figure>
+    <div class="mi-text">
+      <h3>มรดกศิลป์แห่งศรัทธา</h3>
+      <p>จิตรกรรมฝาผนังภายในพระอุโบสถวัดคงคาราม เล่าเรื่องทศชาติและพุทธประวัติผ่านผนังทั้ง ๑๗ ช่อง เลือกผนังจากผังพระอุโบสถหรือแถบภาพด้านล่าง เพื่ออ่านเรื่องราวและดูตำแหน่งของภาพบนผนังจริง</p>
+      <div class="mi-stats">
+        <div><b>17</b><span>ผนังจิตรกรรม</span></div>
+        <div><b>4</b><span>ทิศในพระอุโบสถ</span></div>
+        <div><b id="wallReadyCount">1</b><span>ภาพเผยแพร่แล้ว</span></div>
+      </div>
+      <a href="#wallViewer" class="btn btn-line">เริ่มชมภาพผนัง</a>
+    </div>
+  </div>
+
+  <!-- wall viewer -->
+  <div class="wall-viewer reveal" id="wallViewer">
+    <div class="wall-col">
+      <div class="wall-stage" id="wallStage">
+        <span class="wf-tag" id="wbTag"></span>
+        <div class="wall-imgbox noimg" id="wallImgBox">
+          <img id="wallImg" alt="" draggable="false">
+          <div class="wall-ph"><svg id="wbSceneSvg" viewBox="0 0 300 300"></svg><div class="wall-ph-note">ภาพถ่ายผนังนี้อยู่ระหว่างจัดเตรียม</div></div>
+          <div class="wf-zoom" id="wallZoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg></div>
+        </div>
+        <div class="wall-nav">
+          <div class="book-arrow" id="wallPrev" aria-label="ผนังก่อนหน้า"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></div>
+          <div class="wall-count" id="wallCount"></div>
+          <div class="book-arrow" id="wallNext" aria-label="ผนังถัดไป"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+        </div>
+      </div>
+      <div class="wall-strip" id="wallStrip"></div>
+    </div>
+
+    <div class="wall-side">
+      <div class="wisdom-info" id="wallInfo"></div>
+      <div class="plan-card">
+        <h4>ตำแหน่งผนังในพระอุโบสถ</h4>
+        <svg id="planSvg" viewBox="-70 -60 1000 1650" role="img" aria-label="ผังพระอุโบสถวัดคงคาราม"></svg>
+        <p class="plan-hint">แตะหมายเลขบนผังเพื่อเลือกผนัง · วงเส้นประ = ยังไม่มีภาพ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT THE PROJECT ================= -->
+<section id="about">
+  <div class="about-head reveal">
+    <div class="kicker"><span class="num">i</span><span class="tag">เกี่ยวกับโครงการ</span></div>
+    <h2 class="sec-title">เกี่ยวกับโครงการ</h2>
+    <p class="about-project-title">"แนวทางการออกแบบและพัฒนาสื่อดิจิทัลแบบผสมผสานที่รองรับการพัฒนาเศรษฐกิจสร้างสรรค์บนฐานอัตลักษณ์และวัฒนธรรมท้องถิ่นเพื่อการท่องเที่ยวยั่งยืน : กรณีศึกษาอำเภอโพธาราม จังหวัดราชบุรี"</p>
+  </div>
+
+  <div class="about-grid reveal">
+    <div class="about-seal">
+      <div class="about-seal-inner">
+        <div class="yr">2568</div>
+        <div class="lbl">ปีงบประมาณ</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="about-rows">
+        <div class="about-row">
+          <div class="k">ประเภทโครงการ</div>
+          <div class="v">โครงการวิจัย<small>ประเภทงบประมาณเพื่อสนับสนุนงานมูลฐาน (Fundamental Fund)</small></div>
+        </div>
+        <div class="about-row">
+          <div class="k">แหล่งทุน</div>
+          <div class="v">กองทุนส่งเสริมวิทยาศาสตร์ วิจัยและนวัตกรรม (ววน.)</div>
+        </div>
+        <div class="about-row">
+          <div class="k">หน่วยงาน</div>
+          <div class="v">มหาวิทยาลัยราชภัฏหมู่บ้านจอมบึง</div>
+        </div>
+        <div class="about-row">
+          <div class="k">ปีงบประมาณ</div>
+          <div class="v">พ.ศ. 2568</div>
+        </div>
+        <div class="about-row">
+          <div class="k">พื้นที่ศึกษา</div>
+          <div class="v">อำเภอโพธาราม จังหวัดราชบุรี<small>ครอบคลุมตำบลเตาปูนและตำบลคลองตาคต เป็นพื้นที่ศึกษาเฉพาะของชุดสื่อที่ 4 และ 5</small></div>
+        </div>
+        <div class="about-row">
+          <div class="k">ผลผลิตโครงการ</div>
+          <div class="v">ชุดสื่อดิจิทัลแบบผสมผสาน 5 ชุด และเว็บแอปพลิเคชันต้นแบบเพื่อเผยแพร่และส่งเสริมการท่องเที่ยวเชิงวัฒนธรรม</div>
+        </div>
+      </div>
+
+      <div class="about-note">
+        เว็บแอปพลิเคชันนี้เป็นส่วนหนึ่งของผลผลิตภายใต้โครงการวิจัยข้างต้น จัดทำขึ้นเพื่อนำเสนอแนวทางการออกแบบสื่อดิจิทัลที่รองรับการพัฒนาเศรษฐกิจสร้างสรรค์บนฐานอัตลักษณ์และวัฒนธรรมมอญในพื้นที่อำเภอโพธาราม จังหวัดราชบุรี สู่การท่องเที่ยวอย่างยั่งยืน
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>รามัญวิถี โพธาราม<br><b>โครงการสื่อดิจิทัลเพื่อการท่องเที่ยวเชิงวัฒนธรรมมอญอย่างยั่งยืน</b></div>
+  <div>พื้นที่ศึกษา: อำเภอโพธาราม จังหวัดราชบุรี<br>ต้นแบบเว็บแอปพลิเคชัน — ใช้เพื่อการนำเสนอแนวคิด</div>
+</footer>
+
+<script>
+  // --- Map interactivity ---
+  const START_ID = "0";
+  const mapData = {
+    0: { tag:"ศูนย์กลางเรียนรู้", title:"ศูนย์วัฒนธรรมมอญ", desc:"จุดเริ่มต้นของเส้นทาง รวบรวมข้อมูลประวัติศาสตร์ เครื่องแต่งกาย และของใช้ในวิถีชีวิตมอญ เหมาะเป็นจุดปฐมนิเทศก่อนออกสำรวจชุมชน", dist:"จุดเริ่มต้นเส้นทาง", time:"ใช้เวลา 30–45 นาที", x:150, y:150 },
+    1: { tag:"ศาสนสถานสำคัญ", title:"วัดคงคาราม", desc:"วัดมอญเก่าแก่ชื่อดังด้านจิตรกรรมฝาผนังพื้นหลังสีคราม ชมได้ทั้งแบบปกติและอ่านเรื่องราวเบื้องหลังผ่าน Interactive Visual Storytelling ในชุดสื่อที่ 5", dist:"ห่างจากจุดเริ่มต้น 2.4 กม.", time:"ใช้เวลา 1 ชม.", x:300, y:300 },
+    2: { tag:"ชุมชนวิถีมอญ", title:"ชุมชนมอญบ้านม่วง", desc:"ชุมชนที่ยังคงพูดภาษามอญในชีวิตประจำวัน มีการสาธิตหัตถกรรมและอาหารพื้นถิ่นให้นักท่องเที่ยวได้สัมผัส", dist:"ห่างจากจุดเริ่มต้น 1.6 กม.", time:"ใช้เวลา 45 นาที", x:230, y:220 },
+    3: { tag:"แหล่งภูมิปัญญา", title:"บ้านเนินหนองบัว", desc:"ต้นแบบภูมิปัญญาวิถีชาวนามอญ ตำบลเตาปูน จุดหมายของชุดสื่อที่ 4 ว่าด้วยการทำนาแบบดั้งเดิม", dist:"ห่างจากจุดเริ่มต้น 5.1 กม.", time:"ใช้เวลา 1 ชม.", x:430, y:190 },
+    4: { tag:"วิถีการค้า", title:"ตลาดน้ำวัดโบสถ์", desc:"ตลาดริมน้ำที่ยังคงกลิ่นอายวิถีมอญ แหล่งชิมอาหารและขนมพื้นบ้านตามรอยชุดสื่อที่ 3", dist:"ห่างจากจุดเริ่มต้น 6.3 กม.", time:"ใช้เวลา 1 ชม.", x:500, y:370 },
+  };
+
+  const pins = document.querySelectorAll('.map-pin');
+  const infoBox = document.getElementById('mapInfo');
+  const listBox = document.getElementById('mapList');
+  const routeLine = document.getElementById('routeLine');
+
+  function midpoint(a,b){
+    // gentle curve control point, offset perpendicular to the line
+    const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const len=Math.hypot(dx,dy)||1;
+    const nx=-dy/len, ny=dx/len;
+    const bend=Math.min(28, len*0.18);
+    return { x:mx+nx*bend, y:my+ny*bend };
+  }
+
+  function selectLocation(id){
+    pins.forEach(p=>p.classList.remove('active'));
+    const pin = document.querySelector('.map-pin[data-id="'+id+'"]');
+    if(pin) pin.classList.add('active');
+
+    document.querySelectorAll('.map-list-item').forEach(li=>li.classList.remove('active'));
+    const li = document.querySelector('.map-list-item[data-id="'+id+'"]');
+    if(li) li.classList.add('active');
+
+    const d = mapData[id];
+    infoBox.innerHTML = `
+      <div class="map-info-tag">${d.tag}</div>
+      <h3>${d.title}</h3>
+      <p>${d.desc}</p>
+      <div class="meta">
+        <div><b>${d.dist}</b>ระยะทาง</div>
+        <div><b>${d.time}</b>เวลาแนะนำ</div>
+      </div>`;
+
+    if(id === START_ID){
+      routeLine.classList.remove('show');
+      routeLine.setAttribute('d','');
+    } else {
+      const a = mapData[START_ID], b = mapData[id];
+      const c = midpoint(a,b);
+      routeLine.setAttribute('d', `M${a.x} ${a.y} Q ${c.x} ${c.y} ${b.x} ${b.y}`);
+      routeLine.classList.add('show');
+    }
+  }
+
+  pins.forEach(pin=>{
+    pin.addEventListener('click', ()=> selectLocation(pin.dataset.id));
+  });
+
+  // build the location list from mapData, in a sensible visiting order
+  listBox.innerHTML = Object.keys(mapData).map(id=>{
+    const d = mapData[id];
+    const badge = id === START_ID ? '★' : (Number(id)+1);
+    return `<div class="map-list-item" data-id="${id}">
+      <div class="badge">${badge}</div>
+      <div class="txt"><h5>${d.title}</h5><span>${d.tag}</span></div>
+      <div class="dist">${d.dist.replace('ห่างจากจุดเริ่มต้น ','').replace('จุดเริ่มต้นเส้นทาง','เริ่มที่นี่')}</div>
+    </div>`;
+  }).join('');
+  listBox.querySelectorAll('.map-list-item').forEach(li=>{
+    li.addEventListener('click', ()=> selectLocation(li.dataset.id));
+  });
+
+  // --- Book Story (culinary) ---
+  const bookData = [
+    {
+      tag:"ครัวเรือนมอญ", folio:"๑ / ๓",
+      title:"แกงมอญและเครื่องแกงพื้นบ้าน",
+      desc:"เรียนรู้เคล็ดลับเครื่องแกงจากยายผู้สืบทอดสูตรมาสามชั่วอายุคน เครื่องแกงมอญโพธารามเน้นสมุนไพรสดจากสวนหลังบ้าน ตำด้วยมือทุกขั้นตอนตามวิถีที่ส่งต่อกันมาในครัวเรือน",
+      chips:["สูตรสืบทอด 3 รุ่น","ตำด้วยครก","สมุนไพรสวนหลังบ้าน"],
+      illus:`<rect width="300" height="300" fill="#3B241A"/>
+        <circle cx="150" cy="185" r="86" fill="#C1662F" opacity="0.9"/>
+        <ellipse cx="150" cy="150" rx="86" ry="20" fill="#7A2331" opacity="0.85"/>
+        <ellipse cx="150" cy="150" rx="86" ry="20" fill="none" stroke="#EDE3D0" stroke-width="2" opacity="0.4"/>
+        <g stroke="#EDE3D0" stroke-width="2.4" stroke-linecap="round" opacity="0.55" fill="none">
+          <path d="M120 118 q -6 -22 6 -34"/><path d="M150 112 q -4 -24 8 -36"/><path d="M180 118 q 6 -22 -4 -34"/>
+        </g>
+        <g fill="#C9A227" opacity="0.8"><circle cx="110" cy="150" r="4"/><circle cx="150" cy="142" r="4"/><circle cx="190" cy="150" r="4"/><circle cx="130" cy="160" r="3"/><circle cx="172" cy="160" r="3"/></g>`
+    },
+    {
+      tag:"สำรับหน้าร้อน", folio:"๒ / ๓",
+      title:"ข้าวแช่มอญยามร้อน",
+      desc:"วิถีการทำข้าวแช่แบบดั้งเดิม หุงข้าวให้ร่วนแล้วแช่ในน้ำลอยดอกไม้หอมค้างคืน จัดสำรับคู่เครื่องเคียงปั้นสวยงาม เป็นสำรับเย็นชื่นใจที่ชาวมอญนิยมทำถวายพระในหน้าสงกรานต์",
+      chips:["น้ำลอยดอกมะลิ","สงกรานต์มอญ","เครื่องเคียงปั้นมือ"],
+      illus:`<rect width="300" height="300" fill="#1B3A4B"/>
+        <ellipse cx="150" cy="190" rx="92" ry="46" fill="#5F93A8" opacity="0.5"/>
+        <ellipse cx="150" cy="178" rx="92" ry="40" fill="#EDE3D0" opacity="0.85"/>
+        <ellipse cx="150" cy="178" rx="92" ry="40" fill="none" stroke="#C9A227" stroke-width="2" opacity="0.5"/>
+        <g fill="#F5EEDC" opacity="0.9"><circle cx="112" cy="170" r="9"/><circle cx="150" cy="160" r="9"/><circle cx="188" cy="170" r="9"/></g>
+        <g fill="#C1662F" opacity="0.85"><circle cx="120" cy="196" r="6"/><circle cx="150" cy="200" r="6"/><circle cx="180" cy="196" r="6"/></g>
+        <g stroke="#C9A227" stroke-width="1.6" opacity="0.4" fill="none"><path d="M150 60 q 30 20 0 40"/><path d="M120 70 q 20 22 0 44"/><path d="M180 70 q -20 22 0 44"/></g>`
+    },
+    {
+      tag:"ตลาดเช้า", folio:"๓ / ๓",
+      title:"ขนมมอญในตลาดเช้า",
+      desc:"ตามพ่อค้าแม่ค้าไปสำรวจขนมพื้นบ้านที่หากินได้เฉพาะชุมชนมอญ ตั้งแต่ขนมนึ่งใบตองไปจนถึงของหวานเคี่ยวน้ำตาลโตนด แต่ละแผงมีเรื่องเล่าและสูตรลับที่ต่างกันไปตามตระกูล",
+      chips:["ขนมนึ่งใบตอง","น้ำตาลโตนด","ตลาดริมน้ำ"],
+      illus:`<rect width="300" height="300" fill="#402A22"/>
+        <rect x="60" y="150" width="180" height="20" rx="4" fill="#7A2331" opacity="0.8"/>
+        <g fill="#C1662F" opacity="0.85">
+          <path d="M84 150 q 0 -28 20 -28 q 20 0 20 28 z"/>
+          <path d="M140 150 q 0 -34 20 -34 q 20 0 20 34 z"/>
+          <path d="M196 150 q 0 -24 18 -24 q 18 0 18 24 z"/>
+        </g>
+        <g stroke="#EDE3D0" stroke-width="1.6" opacity="0.35" fill="none">
+          <path d="M100 118 q 4 -14 -4 -22"/><path d="M158 112 q 4 -14 -4 -22"/><path d="M212 122 q 4 -12 -4 -20"/>
+        </g>
+        <g fill="#C9A227" opacity="0.7"><circle cx="90" cy="190" r="3"/><circle cx="150" cy="195" r="3"/><circle cx="210" cy="190" r="3"/></g>`
+    }
+  ];
+
+  let bookIdx = 0;
+  const bookIllus = document.getElementById('bookIllus').querySelector('svg');
+  const bpTag = document.getElementById('bpTag');
+  const bpTitle = document.getElementById('bpTitle');
+  const bpDesc = document.getElementById('bpDesc');
+  const bpChips = document.getElementById('bpChips');
+  const bookFolioL = document.getElementById('bookFolioL');
+  const bookFolioR = document.getElementById('bookFolioR');
+  const bookDots = document.getElementById('bookDots');
+  const storyList = document.getElementById('storyList');
+  const bookPrev = document.getElementById('bookPrev');
+  const bookNext = document.getElementById('bookNext');
+  const bookTextEl = document.getElementById('bookText');
+  const bookIllusEl = document.getElementById('bookIllus');
+
+  function renderBook(idx, animate){
+    const d = bookData[idx];
+    const doFill = ()=>{
+      bookIllus.innerHTML = d.illus;
+      bpTag.textContent = d.tag;
+      bpTitle.textContent = d.title;
+      bpDesc.textContent = d.desc;
+      bpChips.innerHTML = d.chips.map(c=>`<span>${c}</span>`).join('');
+      bookFolioL.textContent = d.folio;
+      bookFolioR.textContent = d.folio;
+    };
+    if(animate){
+      bookIllusEl.classList.add('book-fade');
+      bookTextEl.classList.add('book-fade');
+      setTimeout(()=>{
+        doFill();
+        bookIllusEl.classList.remove('book-fade');
+        bookTextEl.classList.remove('book-fade');
+      }, 220);
+    } else { doFill(); }
+
+    bookDots.querySelectorAll('span').forEach((s,i)=>s.classList.toggle('active', i===idx));
+    storyList.querySelectorAll('.story-list-item').forEach((s,i)=>s.classList.toggle('active', i===idx));
+    bookPrev.classList.toggle('disabled', idx===0);
+    bookNext.classList.toggle('disabled', idx===bookData.length-1);
+  }
+
+  function goTo(idx){
+    idx = Math.max(0, Math.min(bookData.length-1, idx));
+    if(idx===bookIdx) return;
+    bookIdx = idx;
+    renderBook(bookIdx, true);
+  }
+
+  bookDots.innerHTML = bookData.map((_,i)=>`<span data-i="${i}"></span>`).join('');
+  bookDots.querySelectorAll('span').forEach(s=> s.addEventListener('click', ()=> goTo(Number(s.dataset.i))));
+
+  storyList.innerHTML = bookData.map((d,i)=>`
+    <div class="story-list-item" data-i="${i}">
+      <div class="badge">${i+1}</div>
+      <div class="txt"><h5>${d.title}</h5><span>${d.tag}</span></div>
+    </div>`).join('');
+  storyList.querySelectorAll('.story-list-item').forEach(el=> el.addEventListener('click', ()=> goTo(Number(el.dataset.i))));
+
+  bookPrev.addEventListener('click', ()=> goTo(bookIdx-1));
+  bookNext.addEventListener('click', ()=> goTo(bookIdx+1));
+
+  renderBook(bookIdx, false);
+
+  // --- Interactive Visual Storytelling (Wat Khongkharam murals) — 17 walls · real images + floor plan ---
+  const wallBase = [
+    {
+      tag:"ผนังที่ ๑ · ทิศใต้",
+      title:"มโหสถชาดก",
+      desc:"มโหสถบัณฑิตใช้สติปัญญาและกลอุบายปกป้องเมืองมิถิลา จากการยกทัพของพระเจ้าจุลนีที่หมายยึดครอง โดยไม่ต้องสูญเสียเลือดเนื้อแม้แต่หยดเดียว",
+      chips:["ปัญญาบารมี","เมืองมิถิลา","กลอุบายไร้เลือด"],
+      scene:`<rect width="300" height="300" fill="#0F2530"/>
+        <circle cx="150" cy="110" r="46" fill="#C9A227" opacity="0.85"/>
+        <g stroke="#C9A227" stroke-width="3" opacity="0.5">
+          <path d="M150 40 v20"/><path d="M150 180 v20"/><path d="M70 110 h20"/><path d="M210 110 h20"/>
+          <path d="M96 56 l14 14"/><path d="M190 150 l14 14"/><path d="M204 56 l-14 14"/><path d="M96 164 l14 -14"/>
+        </g>
+        <g fill="#1B3A4B" opacity="0.9">
+          <rect x="60" y="220" width="30" height="50"/>
+          <rect x="110" y="200" width="30" height="70"/>
+          <rect x="160" y="210" width="30" height="60"/>
+          <rect x="210" y="225" width="30" height="45"/>
+        </g>
+        <g fill="#C1662F" opacity="0.75">
+          <path d="M110 200 l15 -18 l15 18 z"/>
+          <path d="M160 210 l15 -16 l15 16 z"/>
+        </g>`
+    },
+    {
+      tag:"ผนังที่ ๒-๓ · ทิศใต้",
+      title:"ภูริทัตชาดก และจันทกุมารชาดก",
+      desc:"พญานาคภูริทัตยอมทนทุกข์ทรมานจากพราหมณ์โดยไม่ตอบโต้เพื่อรักษาศีล ขณะที่พระจันทกุมารทรงอดทนต่อความอยุติธรรมจนถูกสั่งประหารโดยพราหมณ์กัณหาผู้ทุจริต ทั้งสองเรื่องสะท้อนพลังแห่งศีลและความอดทน",
+      chips:["ศีลบารมี","ขันติบารมี","ภูริทัต · จันทกุมาร"],
+      scene:`<rect width="300" height="300" fill="#7A2331"/>
+        <path d="M60 240 C 100 160, 200 160, 150 100 C 110 60, 190 40, 230 70" fill="none" stroke="#C9A227" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="230" cy="70" r="14" fill="#EDE3D0" opacity="0.85"/>
+        <g stroke="#1B3A4B" stroke-width="2" opacity="0.4" fill="none">
+          <path d="M70 230 q10 -10 20 0"/><path d="M100 210 q10 -10 20 0"/><path d="M130 185 q10 -10 20 0"/>
+        </g>`
+    },
+    {
+      tag:"ผนังที่ ๔ · ทิศใต้ (บทแทรก)",
+      title:"จุลปทุมชาดก",
+      desc:"ชาดกนอกทศชาติที่ช่างจงใจแทรกไว้ เล่าเรื่องพระโอรสผู้ยอมกรีดเลือดเนื้อตนเองช่วยพระชายาให้รอดตาย แต่กลับถูกพระชายาที่ลอบคบชู้กับโจรป่าผลักตกเหว เป็นเครื่องเตือนใจถึงโทษแห่งความลุ่มหลงในกามและการทรยศ",
+      chips:["บทแทรกนอกทศชาติ","โทษแห่งกาม","จุลปทุมชาดก"],
+      scene:`<rect width="300" height="300" fill="#402A22"/>
+        <path d="M150 90 C 110 50, 40 90, 70 140 C 90 175, 150 220, 150 220 C 150 220, 210 175, 230 140 C 260 90, 190 50, 150 90 Z" fill="#7A2331" opacity="0.75"/>
+        <path d="M150 90 L 130 150 L 160 160 L 140 220" fill="none" stroke="#0F2530" stroke-width="6"/>
+        <g stroke="#C9A227" stroke-width="2" opacity="0.5" fill="none"><path d="M60 240 h180"/></g>`
+    },
+    {
+      tag:"ผนังที่ ๕ · ทิศใต้",
+      title:"วิธูรชาดก",
+      desc:"ปุณณกยักษ์จับพระวิธูรบัณฑิตไปทรมานหวังเอาหัวใจ แต่พระวิธูรกลับใช้หลักธรรมและความสัตย์จริงแสดงธรรมโปรด จนยักษ์เกิดความเลื่อมใสและยอมปล่อยตัวไป",
+      chips:["สัจจบารมี","วิธูรชาดก","ปุณณกยักษ์"],
+      scene:`<rect width="300" height="300" fill="#1B3A4B"/>
+        <circle cx="150" cy="150" r="50" fill="#C9A227" opacity="0.25"/>
+        <circle cx="150" cy="150" r="30" fill="#C9A227" opacity="0.8"/>
+        <g fill="#7A2331" opacity="0.8">
+          <path d="M40 60 L70 100 L30 110 Z"/>
+          <path d="M260 60 L230 100 L270 110 Z"/>
+          <path d="M40 240 L70 200 L30 190 Z"/>
+          <path d="M260 240 L230 200 L270 190 Z"/>
+        </g>`
+    },
+    {
+      tag:"ผนังที่ ๖ · ทิศใต้",
+      title:"เวสสันดรชาดก (ปฐมบท)",
+      desc:"พระเวสสันดรบริจาคช้างปัจจัยนาเคนทร์ ช้างคู่บ้านคู่เมือง จนชาวเมืองโกรธแค้นและเนรเทศพระองค์ออกจากเมืองไปสู่ป่าหิมพานต์ นับเป็นจุดเริ่มต้นของการบำเพ็ญทานบารมีขั้นสูงสุด",
+      chips:["ทานบารมี","ช้างปัจจัยนาเคนทร์","เนรเทศสู่ป่าหิมพานต์"],
+      scene:`<rect width="300" height="300" fill="#E08E52"/>
+        <ellipse cx="150" cy="180" rx="70" ry="45" fill="#1B3A4B" opacity="0.85"/>
+        <path d="M90 175 q -30 10 -25 45" fill="none" stroke="#1B3A4B" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="120" cy="150" r="10" fill="#EDE3D0"/>
+        <path d="M95 145 q -10 -25 5 -30 q 15 5 5 30 z" fill="#F5EEDC" opacity="0.9"/>
+        <ellipse cx="150" cy="180" rx="80" ry="55" fill="none" stroke="#C9A227" stroke-width="3" opacity="0.6"/>`
+    },
+    {
+      tag:"ผนังที่ ๗ · ทิศตะวันตก (หลังพระประธาน)",
+      title:"ไตรภูมิ และการตรัสรู้",
+      desc:"ภาพจักรวาลวิทยาทางพุทธศาสนา แสดงสวรรค์ โลกมนุษย์ และนรก เป็นฉากหลังของพระประธานที่เตือนใจถึงวัฏสงสารและกฎแห่งกรรม เหนือภาพชาดกทางทิศเหนือคือเส้นทางหลังการตรัสรู้ การโปรดเวไนยสัตว์ และการแสดงปาฏิหาริย์",
+      chips:["ไตรภูมิ","กฎแห่งกรรม","การตรัสรู้"],
+      scene:`<rect width="300" height="300" fill="#0d1b28"/>
+        <rect x="0" y="0" width="300" height="100" fill="#12313f"/>
+        <g fill="#C9A227" opacity="0.7"><circle cx="60" cy="40" r="3"/><circle cx="120" cy="25" r="2"/><circle cx="200" cy="45" r="3"/><circle cx="250" cy="20" r="2"/></g>
+        <rect x="0" y="100" width="300" height="100" fill="#1B3A4B" opacity="0.7"/>
+        <rect x="0" y="200" width="300" height="100" fill="#7A2331" opacity="0.8"/>
+        <g fill="#C1662F" opacity="0.8"><path d="M100 300 q10 -30 0 -50 q -10 20 0 50z"/><path d="M180 300 q10 -35 0 -55 q -10 20 0 55z"/></g>`
+    },
+    {
+      tag:"ผนังที่ ๘-๙ · ทิศเหนือ",
+      title:"เวสสันดรชาดก (บทสรุป)",
+      desc:"พระเวสสันดรบำเพ็ญทานบารมีขั้นสูงสุด ด้วยการบริจาคพระโอรส พระธิดา และพระชายา เพื่อตัดขาดจากความผูกพันทางโลกโดยสิ้นเชิง อันเป็นปรมัตถทานบารมี",
+      chips:["ปรมัตถทานบารมี","บริจาคโอรส-ธิดา-ชายา","ตัดขาดพันธะทางโลก"],
+      scene:`<rect width="300" height="300" fill="#F5EEDC"/>
+        <circle cx="90" cy="150" r="34" fill="#1B3A4B" opacity="0.85"/>
+        <g fill="#C1662F" opacity="0.85"><circle cx="180" cy="200" r="12"/><circle cx="215" cy="205" r="12"/><circle cx="250" cy="200" r="12"/></g>
+        <path d="M120 170 Q 180 190 250 200" fill="none" stroke="#C9A227" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>`
+    },
+    {
+      tag:"ผนังที่ ๑๐-๑๑ · ทิศเหนือ",
+      title:"เตมีย์ชาดก และมหาชนกชาดก",
+      desc:"เตมีย์ราชกุมารแสร้งทำเป็นง่อยเปลี้ยและใบ้ เพื่อหลีกเลี่ยงการครองราชย์ที่ต้องทำบาป ส่วนพระมหาชนกทรงว่ายน้ำในมหาสมุทรด้วยความเพียรถึง 7 วัน 7 คืนโดยไม่เห็นฝั่ง ทั้งสองเรื่องแสดงการต่อสู้คนละแบบ หนึ่งด้วยความนิ่ง อีกหนึ่งด้วยการกระทำ",
+      chips:["เนกขัมมบารมี","วิริยบารมี","เตมีย์ · มหาชนก"],
+      scene:`<rect width="150" height="300" fill="#1B3A4B"/>
+        <rect x="150" width="150" height="300" fill="#5F93A8"/>
+        <circle cx="75" cy="150" r="30" fill="#C9A227" opacity="0.7"/>
+        <path d="M195 100 q20 20 0 40 q -20 20 0 40 q 20 20 0 40" fill="none" stroke="#EDE3D0" stroke-width="3" opacity="0.6"/>
+        <circle cx="225" cy="150" r="10" fill="#F5EEDC"/>`
+    },
+    {
+      tag:"ผนังที่ ๑๒ · ทิศเหนือ",
+      title:"สุวรรณสามชาดก",
+      desc:"สุวรรณสามผู้เปี่ยมเมตตาเลี้ยงดูบิดามารดาผู้ตาบอดในป่า แม้ถูกพระเจ้ากบิลยักษ์ยิงด้วยธนูอาบยาพิษจนสิ้นชีวิต แต่ด้วยอำนาจแห่งเมตตาธรรม ทำให้ท่านฟื้นคืนชีพและบิดามารดากลับมามองเห็นได้อีกครั้ง",
+      chips:["เมตตาบารมี","สุวรรณสาม","เลี้ยงดูบิดามารดา"],
+      scene:`<rect width="300" height="300" fill="#243f2e"/>
+        <circle cx="150" cy="160" r="40" fill="#C9A227" opacity="0.85"/>
+        <g fill="#EDE3D0" opacity="0.8">
+          <circle cx="90" cy="120" r="10"/><circle cx="210" cy="120" r="10"/>
+          <circle cx="70" cy="200" r="8"/><circle cx="230" cy="200" r="8"/>
+          <circle cx="150" cy="230" r="8"/>
+        </g>
+        <path d="M150 90 L170 60" stroke="#7A2331" stroke-width="4" stroke-linecap="round"/>`
+    },
+    {
+      tag:"ผนังที่ ๑๓ · ทิศเหนือ",
+      title:"พรหมนารทชาดก",
+      desc:"พระเจ้าอังคติราชหลงเชื่อคำสอนมิจฉาทิฏฐิจนละทิ้งการทำความดี พรหมนารทจึงจำแลงกายลงมาจากสวรรค์แสดงธรรม ชี้ให้เห็นบาปบุญคุณโทษ จนกษัตริย์กลับพระทัย",
+      chips:["อุเบกขาบารมี","พรหมนารท","แก้มิจฉาทิฏฐิ"],
+      scene:`<rect width="300" height="300" fill="#1B2A4B"/>
+        <circle cx="150" cy="90" r="26" fill="#C9A227" opacity="0.9"/>
+        <path d="M150 116 v50" stroke="#C9A227" stroke-width="3"/>
+        <path d="M100 170 h100" stroke="#EDE3D0" stroke-width="3"/>
+        <path d="M100 170 q-15 25 0 40" stroke="#EDE3D0" stroke-width="3" fill="none"/>
+        <path d="M200 170 q15 25 0 40" stroke="#EDE3D0" stroke-width="3" fill="none"/>
+        <rect x="40" y="230" width="220" height="20" rx="4" fill="#7A2331" opacity="0.85"/>`
+    },
+    {
+      tag:"ผนังที่ ๑๔ · ทิศตะวันออก (ใกล้ทางออก)",
+      title:"เนมิราชชาดก",
+      desc:"พระเนมิราชเสด็จทอดพระเนตรทั้งนรกและสวรรค์ เพื่อนำความจริงมาบอกกล่าวแก่ประชาชน ภาพนี้จงใจวางไว้ที่ผนังใกล้ทางออก เพื่อเป็นภาพสุดท้ายที่เตือนสติผู้มาสักการะถึงผลแห่งกรรมดีและกรรมชั่ว",
+      chips:["อธิษฐานบารมี","เนมิราชชาดก","นรก · สวรรค์"],
+      scene:`<rect width="300" height="300" fill="#0d1b28"/>
+        <path d="M0 0 L300 0 L0 300 Z" fill="#C9A227" opacity="0.65"/>
+        <path d="M300 0 L300 300 L0 300 Z" fill="#7A2331" opacity="0.75"/>
+        <g fill="#C1662F" opacity="0.85"><path d="M180 260 q10 -25 0 -45 q -10 20 0 45z"/><path d="M230 270 q10 -30 0 -50 q -10 20 0 50z"/></g>
+        <circle cx="90" cy="70" r="16" fill="#F5EEDC" opacity="0.9"/>`
+    },
+    {
+      tag:"ผนังที่ ๑๗ · ทิศตะวันออก",
+      title:"มารผจญ",
+      desc:"กองทัพพญามารยกมาขัดขวางการตรัสรู้ พระแม่ธรณีบีบมวยผมหลั่งน้ำที่เกิดจากบุญบารมีสะสมของพระพุทธองค์ พัดพากองทัพมารจนพ่ายแพ้ เป็นบทสรุปแห่งทศบารมีที่หลอมรวมเป็นหนึ่งเดียว เพื่อกวาดล้างกิเลสและอวิชชา",
+      chips:["บทสรุปแห่งทศบารมี","มารผจญ","พระแม่ธรณี"],
+      scene:`<rect width="300" height="300" fill="#0F2530"/>
+        <path d="M0 190 C 60 160, 100 220, 150 190 C 200 160, 240 220, 300 190 L300 300 L0 300 Z" fill="#5F93A8" opacity="0.85"/>
+        <path d="M0 210 C 60 180, 100 240, 150 210 C 200 180, 240 240, 300 210" fill="none" stroke="#EDE3D0" stroke-width="3" opacity="0.6"/>
+        <g fill="#7A2331" opacity="0.7"><circle cx="60" cy="150" r="10"/><circle cx="230" cy="140" r="10"/><circle cx="140" cy="120" r="8"/></g>
+        <circle cx="150" cy="90" r="30" fill="#C9A227" opacity="0.5"/>`
+    }
+  ];
+
+  // ----- 17 walls: b = index into wallBase (reuse text/scene), override per wall -----
+  const thaiNum = n => String(n).replace(/\d/g, d=>'๐๑๒๓๔๕๖๗๘๙'[d]);
+  const sideOf = n => n<=6 ? 'ใต้' : n===7 ? 'ตะวันตก' : n<=13 ? 'เหนือ' : 'ตะวันออก';
+  const pendingScene = `<rect width="300" height="300" fill="#12313f"/>
+    <g fill="none" stroke="#C9A227" stroke-width="2" opacity="0.5"><rect x="60" y="60" width="180" height="180" rx="6"/><path d="M60 60 L240 240 M240 60 L60 240" opacity="0.4"/></g>`;
+  const wallSpec = [
+    {n:1,  b:0, virtue:'ปัญญาบารมี',
+      lead:'พระมโหสถใช้สติปัญญาอันล้ำเลิศ แก้ไขปัญหาและใช้อุบายเพื่อช่วยเหลือพระเจ้าวิเทหราชให้รอดพ้นจากเงื้อมมือของศัตรู'},
+    {n:2,  b:1, title:'ภูริทัตชาดก', virtue:'ศีลบารมี',
+      desc:'พญานาคภูริทัตยอมทนทุกข์ทรมานจากพราหมณ์โดยไม่ตอบโต้ เพื่อรักษาศีลให้บริสุทธิ์ เป็นภาพสะท้อนพลังแห่งศีล',
+      chips:['ศีลบารมี','ภูริทัตชาดก','พญานาค']},
+    {n:3,  b:1, title:'จันทกุมารชาดก', virtue:'ขันติบารมี',
+      desc:'พระจันทกุมารทรงอดทนต่อความอยุติธรรมจนถูกสั่งประหารโดยพราหมณ์กัณหาผู้ทุจริต สะท้อนพลังแห่งความอดทน',
+      chips:['ขันติบารมี','จันทกุมารชาดก','พราหมณ์กัณหา']},
+    {n:4,  b:2, note:'บทแทรก', virtue:'ชาดกนอกทศชาติ'},
+    {n:5,  b:3, virtue:'สัจจบารมี'},
+    {n:6,  b:4, note:'ปฐมบท', virtue:'ทานบารมี'},
+    {n:7,  b:5, note:'หลังพระประธาน', virtue:'ไตรภูมิ · การตรัสรู้'},
+    {n:8,  b:6, note:'ต่อเนื่องผนังที่ ๙', virtue:'ปรมัตถทานบารมี'},
+    {n:9,  b:6, note:'ต่อเนื่องผนังที่ ๘', virtue:'ปรมัตถทานบารมี'},
+    {n:10, b:7, title:'เตมีย์ชาดก', virtue:'เนกขัมมบารมี',
+      desc:'เตมีย์ราชกุมารแสร้งทำเป็นง่อยเปลี้ยและใบ้ เพื่อหลีกเลี่ยงการครองราชย์ที่ต้องทำบาป ยืนหยัดในการออกบวชแม้ถูกทดสอบสารพัด',
+      chips:['เนกขัมมบารมี','เตมีย์ชาดก','ออกบวช']},
+    {n:11, b:7, title:'มหาชนกชาดก', virtue:'วิริยบารมี',
+      desc:'พระมหาชนกทรงว่ายน้ำในมหาสมุทรด้วยความเพียรถึง 7 วัน 7 คืนโดยไม่เห็นฝั่ง เป็นภาพแห่งความเพียรที่ไม่ย่อท้อ',
+      chips:['วิริยบารมี','มหาชนกชาดก','ความเพียร']},
+    {n:12, b:8, virtue:'เมตตาบารมี'},
+    {n:13, b:9, virtue:'อุเบกขาบารมี'},
+    {n:14, b:10, note:'ใกล้ทางออก', virtue:'อธิษฐานบารมี'},
+    {n:15, pending:true},
+    {n:16, pending:true},
+    {n:17, b:11, virtue:'บทสรุปแห่งทศบารมี'}
+  ];
+  const wallData = wallSpec.map(s=>{
+    const base = s.pending ? null : wallBase[s.b];
+    const side = sideOf(s.n);
+    return {
+      n:s.n, side,
+      tag:`ผนังที่ ${thaiNum(s.n)} · ทิศ${side}` + (s.note ? ` (${s.note})` : ''),
+      title: s.pending ? `ผนังที่ ${thaiNum(s.n)}` : (s.title || base.title),
+      virtue: s.virtue || '',
+      lead: s.lead || '',
+      desc: s.pending ? 'รอข้อมูลเรื่องราวของผนังนี้ — เพิ่มภาพ Wall'+s.n+'.jpg ในโฟลเดอร์ assets และแก้ไขข้อความในรายการ wallSpec' : (s.desc || base.desc),
+      chips: s.pending ? ['อยู่ระหว่างรวบรวมข้อมูล'] : (s.chips || base.chips),
+      scene: s.pending ? pendingScene : base.scene,
+      img: null
+    };
+  });
+
+  // ----- floor plan: image + clickable markers -----
+  const planPts = {};
+  for(let i=0;i<6;i++){ planPts[1+i]=[605-440, 690+130*i-190]; planPts[8+i]=[1137-440, 690+130*i-190]; }
+  planPts[7]=[870-440, 432-190];
+  planPts[14]=[640-440,1462-190]; planPts[15]=[770-440,1462-190]; planPts[16]=[975-440,1462-190]; planPts[17]=[1100-440,1462-190];
+
+  const planSvg = document.getElementById('planSvg');
+  planSvg.innerHTML = `
+    <rect x="-70" y="-60" width="1000" height="1650" rx="14" fill="#0d222c"/>
+    <image href="assets/mural-plan.jpg" x="0" y="0" width="860" height="1530"/>
+    <text class="plan-lbl" x="430" y="-18">ทิศตะวันตก (หลังพระประธาน)</text>
+    <text class="plan-lbl" x="430" y="1572">ทิศตะวันออก (ทางเข้า)</text>
+    <text class="plan-lbl" x="-34" y="765" transform="rotate(-90 -34 765)">ทิศใต้ · ผนัง ๑-๖</text>
+    <text class="plan-lbl" x="894" y="765" transform="rotate(90 894 765)">ทิศเหนือ · ผนัง ๘-๑๓</text>` +
+    wallData.map(d=>{
+      const [x,y]=planPts[d.n];
+      return `<g class="pm noimg" data-i="${d.n-1}" transform="translate(${x} ${y})"><circle class="ring" r="21"/><circle class="c" r="21"/><text>${d.n}</text></g>`;
+    }).join('');
+
+  // ----- DOM -----
+  let wallIdx = 0;
+  const wbTag = document.getElementById('wbTag');
+  const wallImgBox = document.getElementById('wallImgBox');
+  const wallImg = document.getElementById('wallImg');
+  const wbSceneSvg = document.getElementById('wbSceneSvg');
+  const wallInfo = document.getElementById('wallInfo');
+  const wallStrip = document.getElementById('wallStrip');
+  const wallCount = document.getElementById('wallCount');
+  const wallPrev = document.getElementById('wallPrev');
+  const wallNext = document.getElementById('wallNext');
+  const wallReadyCount = document.getElementById('wallReadyCount');
+
+  function buildStrip(){
+    wallStrip.innerHTML = wallData.map((d,i)=>`
+      <div class="ws-item${d.img?'':' noimg'}${i===wallIdx?' active':''}" data-i="${i}" title="${d.title}">
+        <div class="ws-thumb">${d.img ? `<img src="${d.img}" alt="${d.title}" loading="lazy">` : `<svg viewBox="0 0 300 300">${d.scene}</svg>`}<span class="ws-num">${d.n}</span></div>
+        <div class="ws-t">${d.title}</div>
+      </div>`).join('');
+    wallStrip.querySelectorAll('.ws-item').forEach(el=> el.addEventListener('click', ()=> goToWall(Number(el.dataset.i))));
+  }
+
+  function syncMarks(){
+    planSvg.querySelectorAll('.pm').forEach((el,i)=>{
+      el.classList.toggle('active', i===wallIdx);
+      el.classList.toggle('noimg', !wallData[i].img);
+    });
+    wallStrip.querySelectorAll('.ws-item').forEach((el,i)=> el.classList.toggle('active', i===wallIdx));
+    wallReadyCount.textContent = wallData.filter(d=>d.img).length;
+  }
+
+  function renderWall(idx, animate){
+    const d = wallData[idx];
+    const fill = ()=>{
+      wbTag.textContent = d.tag;
+      wallCount.textContent = `ผนัง ${idx+1} / ${wallData.length}`;
+      wallPrev.classList.toggle('disabled', idx===0);
+      wallNext.classList.toggle('disabled', idx===wallData.length-1);
+      wbSceneSvg.innerHTML = d.scene;
+      wallImgBox.style.aspectRatio = '4 / 5';
+      if(d.img){ wallImg.onload = ()=>{ if(wallImg.naturalWidth) wallImgBox.style.aspectRatio = wallImg.naturalWidth+' / '+wallImg.naturalHeight; }; wallImg.src = d.img; wallImg.alt = d.title; wallImgBox.classList.remove('noimg'); }
+      else { wallImg.removeAttribute('src'); wallImgBox.classList.add('noimg'); }
+      wallInfo.innerHTML = `
+        <div class="wi-tag">${d.tag}</div>
+        <h3>${d.title}</h3>
+        ${d.virtue ? `<div class="wi-virtue">${d.virtue}</div>` : ''}
+        ${d.lead ? `<p class="wi-lead">${d.lead}</p>` : ''}
+        <p>${d.desc}</p>
+        <div class="wi-chips">${d.chips.map(c=>`<span>${c}</span>`).join('')}</div>`;
+    };
+    if(animate){
+      wallImgBox.classList.add('fade');
+      setTimeout(()=>{ fill(); wallImgBox.classList.remove('fade'); }, 200);
+    } else { fill(); }
+    syncMarks();
+  }
+
+  function goToWall(idx){
+    idx = Math.max(0, Math.min(wallData.length-1, idx));
+    if(idx===wallIdx) return;
+    wallIdx = idx;
+    renderWall(wallIdx, true);
+  }
+
+  planSvg.querySelectorAll('.pm').forEach(el=> el.addEventListener('click', ()=> goToWall(Number(el.dataset.i))));
+  wallPrev.addEventListener('click', ()=> goToWall(wallIdx-1));
+  wallNext.addEventListener('click', ()=> goToWall(wallIdx+1));
+
+  // swipe on the image (mobile)
+  let sx = null;
+  wallImgBox.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
+  wallImgBox.addEventListener('touchend', e=>{
+    if(sx===null) return;
+    const dx = e.changedTouches[0].clientX - sx; sx = null;
+    if(Math.abs(dx)>50) goToWall(wallIdx + (dx<0 ? 1 : -1));
+  });
+
+  // zoom (reuses the shared lightbox)
+  const openLightbox = (src, alt)=>{
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxImg').alt = alt || '';
+    lb.classList.add('show');
+  };
+  wallImgBox.addEventListener('click', ()=>{ const d = wallData[wallIdx]; if(d.img) openLightbox(d.img, d.title); });
+  document.getElementById('muralCover').addEventListener('click', ()=> openLightbox('assets/mural-cover.jpg','ปกชุดสื่อ Interactive Visual Storytelling มรดกศิลป์แห่งศรัทธา'));
+
+  // ----- find wall images: assets/Wall{n}.jpg (also .png / .webp / .jpeg) -----
+  function probeWall(d){
+    return new Promise(res=>{
+      const exts = ['jpg','png','webp','jpeg'];
+      const tryNext = ()=>{
+        if(!exts.length){ res(false); return; }
+        const im = new Image();
+        im.onload = ()=>{ d.img = im.src; res(true); };
+        im.onerror = tryNext;
+        im.src = `assets/Wall${d.n}.${exts.shift()}`;
+      };
+      tryNext();
+    });
+  }
+
+  buildStrip();
+  renderWall(wallIdx, false);
+  Promise.all(wallData.map(probeWall)).then(()=>{ buildStrip(); renderWall(wallIdx, false); });
+
+  // --- Wisdom infographic (real era posters) ---
+  const eraData = [
+    {
+      tag:"ยุคที่ 1 · เกษตรธรรมชาติ", title:"เกษตรธรรมชาติ",
+      desc:"ชาวนาพึ่งพาน้ำฝนเพียงอย่างเดียว ใช้แรงงานวัวไถนา ทำนาปีละ 1 ครั้งช่วงเดือนพฤษภาคม ปลูกข้าวเหลืองอ่อนและข้าวเหลืองประทิว ผูกพันกับพิธีกรรม เช่น พิธีรับท้องข้าวบูชาพระแม่โพสพ และการลงแขกเกี่ยวข้าว",
+      chips:["พึ่งพาน้ำฝน","แรงงานวัว","นาปีละ 1 ครั้ง"], img:"assets/wisdom-era1.jpg"
+    },
+    {
+      tag:"ยุคที่ 2 · เริ่มใช้เครื่องจักร", title:"ยุคเริ่มใช้เครื่องจักร",
+      desc:"เริ่มมีรถไถเดินตามในบางครัวเรือน แต่หลายบ้านยังใช้วัวไถนาเพราะราคารถไถสูง ยังไม่มีการใช้ปุ๋ยเคมี เริ่มมีโรงสีประจำตำบล และราวปี พ.ศ. 2525 เริ่มมีการขุดคลองส่งน้ำจากเขื่อนท่าม่วง จังหวัดกาญจนบุรี",
+      chips:["รถไถเดินตาม","โรงสีประจำตำบล","พ.ศ. 2525 ขุดคลอง"], img:"assets/wisdom-era2.jpg"
+    },
+    {
+      tag:"ยุคที่ 3 · จัดรูปที่ดิน", title:"ยุคจัดรูปที่ดิน",
+      desc:"เริ่มปี พ.ศ. 2530 ภาครัฐจัดรูปที่ดินและระบบชลประทานเต็มรูปแบบ ทำให้ทำนาได้ปีละ 2 ครั้ง เริ่มปลูกข้าวพันธุ์ กข และข้าวพันธุ์สุพรรณบุรี 1 เกษตรกรเลิกใช้วัวไถนาโดยสิ้นเชิง เริ่มใช้ยาปราบวัชพืชและมีเครื่องสีข้าวแทนแรงงานคน",
+      chips:["พ.ศ. 2530","นาปรัง 2 ครั้ง/ปี","เลิกใช้วัวไถนา"], img:"assets/wisdom-era3.jpg"
+    },
+    {
+      tag:"ยุคที่ 4 · เกษตรสมัยใหม่", title:"เกษตรสมัยใหม่",
+      desc:"มีเครื่องจักรใช้แทบทุกขั้นตอน ตั้งแต่ไถ หว่าน จนถึงเก็บเกี่ยวด้วยรถเกี่ยวข้าว ต้นทุนเพิ่มขึ้นจากค่าปุ๋ยและสารเคมี บางรายเริ่มทำนาปลอดสารด้วยปุ๋ยหมักอินทรีย์ และภาครัฐห้ามเผาตอซังข้าว เปลี่ยนเป็นไถกลบแทน",
+      chips:["เครื่องจักรครบวงจร","นาอินทรีย์","งดเผาตอซัง"], img:"assets/wisdom-era4.jpg"
+    }
+  ];
+
+  let eraIdx = 0;
+  const wfTag = document.getElementById('wfTag');
+  const wisdomImg = document.getElementById('wisdomImg');
+  const wisdomInfo = document.getElementById('wisdomInfo');
+  const eraList = document.getElementById('eraList');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+
+  function renderEra(idx, animate){
+    const d = eraData[idx];
+    const fill = ()=>{
+      wfTag.textContent = d.tag;
+      wisdomImg.src = d.img;
+      wisdomImg.alt = d.title;
+      wisdomInfo.innerHTML = `
+        <div class="wi-tag">${d.tag}</div>
+        <h3>${d.title}</h3>
+        <p>${d.desc}</p>
+        <div class="wi-chips">${d.chips.map(c=>`<span>${c}</span>`).join('')}</div>`;
+    };
+    if(animate){
+      wisdomImg.classList.add('wf-fade');
+      setTimeout(()=>{ fill(); wisdomImg.classList.remove('wf-fade'); }, 200);
+    } else { fill(); }
+    eraList.querySelectorAll('.era-item').forEach((el,i)=>el.classList.toggle('active', i===idx));
+  }
+
+  function goToEra(idx){
+    idx = Math.max(0, Math.min(eraData.length-1, idx));
+    eraIdx = idx;
+    renderEra(eraIdx, true);
+  }
+
+  eraList.innerHTML = eraData.map((d,i)=>`
+    <div class="era-item" data-i="${i}">
+      <div class="thumb"><img src="${d.img}" alt="${d.title}"></div>
+      <div class="txt"><h5>${d.title}</h5><span>${d.tag.split('·')[0].trim()}</span></div>
+    </div>`).join('');
+  eraList.querySelectorAll('.era-item').forEach(el=> el.addEventListener('click', ()=> goToEra(Number(el.dataset.i))));
+
+  renderEra(eraIdx, false);
+
+  document.getElementById('wfImgBox').addEventListener('click', ()=>{
+    lightboxImg.src = eraData[eraIdx].img;
+    lightboxImg.alt = eraData[eraIdx].title;
+    lightbox.classList.add('show');
+  });
+  document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('show'));
+  lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('show'); });
+
+  // --- Scroll reveal ---
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
+  }, { threshold:0.15 });
+  revealEls.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
