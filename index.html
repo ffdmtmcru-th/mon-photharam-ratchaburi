@@ -207,6 +207,15 @@
   .map-info .meta div{font-size:12px; color:#7a6b57;}
   .map-info .meta b{display:block; color:var(--indigo-deep); font-size:13.5px; font-family:'Noto Serif Thai',serif;}
 
+
+  .map-info .sub{font-size:12.5px; color:#7a6b57; margin:-4px 0 12px;}
+  .map-info .hl-list{list-style:none; margin:0 0 14px; padding:0;}
+  .map-info .hl-list li{position:relative; padding-left:16px; font-size:13.5px; color:#4a3f31; margin-bottom:6px; line-height:1.55;}
+  .map-info .hl-list li::before{content:""; position:absolute; left:2px; top:.62em; width:6px; height:6px; border-radius:50%; background:var(--clay-soft);}
+  .map-grid-line{stroke:rgba(237,227,208,0.09); stroke-width:1;}
+  .map-grid-label{font-family:'Sarabun',sans-serif; font-size:8.5px; fill:rgba(237,227,208,0.35);}
+  .map-note{font-size:10.5px; color:var(--plaster-warm); opacity:.5; margin-top:10px;}
+
   .map-list{
     background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:8px; box-shadow:var(--shadow);
   }
@@ -629,91 +638,43 @@
   <div class="reveal">
     <div class="kicker"><span class="num">01</span><span class="tag">Interactive Map</span></div>
     <h2 class="sec-title">แผนที่เส้นทางท่องเที่ยววัฒนธรรมมอญ</h2>
-    <p class="sec-desc">แผนที่ดิจิทัลแบบปฏิสัมพันธ์ แตะหมุดหรือเลือกจากรายการ เพื่อสำรวจชุมชนมอญ วัดมอญ และศูนย์วัฒนธรรมพื้นถิ่นทั่วอำเภอโพธาราม พร้อมระยะทางและเวลาแนะนำ นับจากจุดเริ่มต้นเส้นทาง</p>
+    <p class="sec-desc">แผนที่ดิจิทัลแบบปฏิสัมพันธ์ แตะหมุดหรือเลือกจากรายการ เพื่อสำรวจชุมชนมอญ วัดมอญ และศูนย์วัฒนธรรมพื้นถิ่นทั่วอำเภอโพธาราม พร้อมระยะทางและเวลาแนะนำ นับจากจุดเริ่มต้นเส้นทางที่วัดคงคาราม (ศูนย์วัฒนธรรมมอญ)</p>
     <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: อำเภอโพธาราม</span>
   </div>
 
   <div class="map-wrap reveal">
     <div class="map-canvas">
       <svg viewBox="0 0 640 460" id="mapSvg">
-        <!-- zoning / sub-district guide lines -->
-        <path class="map-zone-line" d="M0 210 C 160 190, 260 240, 340 200 C 440 150, 540 170, 640 140"/>
-        <text class="map-area-label" x="70" y="90">ต.คลองตาคต</text>
-        <text class="map-area-label" x="470" y="130">ต.เตาปูน</text>
-        <text class="map-area-label" x="270" y="410">ต.โพธาราม</text>
-
-        <!-- river -->
-        <path class="map-river-fill" d="M10 40 C 130 90, 110 170, 210 210 C 330 255, 320 330, 450 372 C 512 392, 555 410, 630 432
-                                          L 640 460 L 0 460 L 0 60 Z" opacity="0"/>
-        <path class="map-river" d="M20 55 C 140 100, 118 178, 218 218 C 338 262, 328 336, 458 378 C 518 398, 558 416, 628 438" stroke-width="14"/>
-        <path class="map-river" d="M20 55 C 140 100, 118 178, 218 218 C 338 262, 328 336, 458 378 C 518 398, 558 416, 628 438" stroke-width="2" stroke="#EDE3D0" opacity="0.25"/>
-        <text class="map-area-label" x="60" y="42" opacity="0.4">แม่น้ำแม่กลอง</text>
-
-        <!-- road network -->
-        <path class="map-road" d="M60 380 C 150 300, 260 260, 340 180 C 400 120, 470 90, 580 50"/>
-        <path class="map-road" d="M120 60 C 200 140, 260 200, 300 300 C 320 350, 360 390, 420 420"/>
-        <path class="map-road-minor" d="M150 150 C 220 170, 260 195, 300 300"/>
-        <path class="map-road-minor" d="M300 300 C 360 330, 420 350, 500 370"/>
-        <path class="map-road-minor" d="M150 150 C 260 165, 350 175, 430 190"/>
+        <!-- graticule + sub-district labels (drawn from coordinates in JS) -->
+        <g id="gridLayer"></g>
+        <g id="areaLayer"></g>
 
         <!-- suggested route (drawn on selection) -->
         <path class="map-route" id="routeLine" d=""/>
 
         <!-- compass -->
-        <g class="compass" transform="translate(580,395)">
+        <g class="compass" transform="translate(590,395)">
           <circle r="22" fill="none" stroke="rgba(237,227,208,0.3)" stroke-width="1"/>
           <path d="M0 -16 L5 0 L0 16 L-5 0 Z" fill="var(--gold)" opacity="0.85"/>
           <text y="-26">N</text>
         </g>
-        <!-- scale -->
+        <!-- scale: 5 km -->
         <g transform="translate(40,428)">
-          <line class="scale-bar" x1="0" y1="0" x2="60" y2="0"/>
+          <line class="scale-bar" x1="0" y1="0" x2="120" y2="0"/>
           <line class="scale-bar" x1="0" y1="-4" x2="0" y2="4"/>
-          <line class="scale-bar" x1="60" y1="-4" x2="60" y2="4"/>
-          <text class="scale-text" x="30" y="16" text-anchor="middle">≈ 2 กม.</text>
+          <line class="scale-bar" x1="120" y1="-4" x2="120" y2="4"/>
+          <text class="scale-text" x="60" y="16" text-anchor="middle">5 กม.</text>
         </g>
 
-        <!-- pins -->
-        <g class="map-pin start" data-id="0" transform="translate(150,150)">
-          <circle class="outer" r="13"/>
-          <circle class="ring" r="9"/>
-          <circle class="dot" r="6"/>
-        </g>
-        <text class="map-label start-label" x="150" y="130" text-anchor="middle">① ศูนย์วัฒนธรรมมอญ · เริ่มที่นี่</text>
-
-        <g class="map-pin" data-id="1" transform="translate(300,300)">
-          <circle class="ring" r="9"/>
-          <circle class="dot" r="8"/>
-          <text class="pin-num">2</text>
-        </g>
-        <text class="map-label" x="300" y="282" text-anchor="middle">วัดคงคาราม</text>
-
-        <g class="map-pin" data-id="2" transform="translate(230,220)">
-          <circle class="ring" r="9"/>
-          <circle class="dot" r="8"/>
-          <text class="pin-num">3</text>
-        </g>
-        <text class="map-label" x="230" y="202" text-anchor="middle">ชุมชนมอญบ้านม่วง</text>
-
-        <g class="map-pin" data-id="3" transform="translate(430,190)">
-          <circle class="ring" r="9"/>
-          <circle class="dot" r="8"/>
-          <text class="pin-num">4</text>
-        </g>
-        <text class="map-label" x="430" y="172" text-anchor="middle">บ้านเนินหนองบัว</text>
-
-        <g class="map-pin" data-id="4" transform="translate(500,370)">
-          <circle class="ring" r="9"/>
-          <circle class="dot" r="8"/>
-          <text class="pin-num">5</text>
-        </g>
-        <text class="map-label" x="500" y="352" text-anchor="middle">ตลาดน้ำวัดโบสถ์</text>
+        <!-- pins (rendered from mapData) -->
+        <g id="pinLayer"></g>
       </svg>
       <div class="map-legend">
-        <span><i class="start"></i>จุดเริ่มต้นเส้นทาง</span>
+        <span><i class="start"></i>จุดเริ่มต้น: วัดคงคาราม (ศูนย์วัฒนธรรมมอญ)</span>
         <span><i></i>แตะหมุดเพื่อดูรายละเอียด</span>
-        <span style="opacity:0.5">เส้นประสีทอง = เส้นทางแนะนำจากจุดเริ่มต้น</span>
+        <span style="opacity:0.5">เส้นประสีทอง = เส้นตรงจากจุดเริ่มต้น</span>
       </div>
+      <div class="map-note">ตำแหน่งหมุดฉายจากพิกัดในชุดข้อมูลแผนที่ GIS (ละเอียดระดับ 12–36 พิลิปดา) ระยะทางเป็นระยะเส้นตรงโดยประมาณ หมุดที่พิกัดซ้ำกันถูกเลื่อนเล็กน้อยเพื่อให้แตะได้</div>
     </div>
 
     <div class="map-side">
@@ -796,7 +757,7 @@
 <!-- ================= 03 CULINARY ================= -->
 <section id="culinary">
   <div class="reveal">
-    <div class="kicker"><span class="num">03</span><span class="tag">E-Menu</span></div>
+    <div class="kicker"><span class="num">03</span><span class="tag">E-Story Book</span></div>
     <h2 class="sec-title">รสชาติมอญแท้</h2>
     <p class="sec-desc">หนังสือภาพเล่าเรื่องราวอาหารมอญและวัฒนธรรมการกิน ผ่านครัวเรือนและตลาดในชุมชน พลิกหน้าหนังสือหรือเลือกจากรายการ เพื่ออ่านเรื่องราวเบื้องหลังแต่ละเมนู</p>
     <span class="sec-loc">ขอบเขตพื้นที่ศึกษา: อำเภอโพธาราม</span>
@@ -835,7 +796,7 @@
  <!-- ปุ่มเปิด E-Menu -->
   <div class="ebook-link">
     <a href="https://heyzine.com/flip-book/2b8fd931e1.html" target="_blank" class="btn-ebook">
-      📖 เปิดอ่าน E-MENU รสชาติมอญ
+      📖 เปิดอ่าน E-Story Book รสชาติมอญ
     </a>
   </div>
 </section>
@@ -989,15 +950,101 @@
 </footer>
 
 <script>
-  // --- Map interactivity ---
+  // --- Map interactivity (data from "MON Cultural & Identity Map – Photharam" CSV: poi-places + temples-history) ---
   const START_ID = "0";
+  const dms = (d,m,s)=> d + m/60 + s/3600;
+  // lat/lon from CSV; dx,dy = small display offset for places sharing identical coordinates; lab = label placement
   const mapData = {
-    0: { tag:"ศูนย์กลางเรียนรู้", title:"ศูนย์วัฒนธรรมมอญ", desc:"จุดเริ่มต้นของเส้นทาง รวบรวมข้อมูลประวัติศาสตร์ เครื่องแต่งกาย และของใช้ในวิถีชีวิตมอญ เหมาะเป็นจุดปฐมนิเทศก่อนออกสำรวจชุมชน", dist:"จุดเริ่มต้นเส้นทาง", time:"ใช้เวลา 30–45 นาที", x:150, y:150 },
-    1: { tag:"ศาสนสถานสำคัญ", title:"วัดคงคาราม", desc:"วัดมอญเก่าแก่ชื่อดังด้านจิตรกรรมฝาผนังพื้นหลังสีคราม ชมได้ทั้งแบบปกติและอ่านเรื่องราวเบื้องหลังผ่าน Interactive Visual Storytelling ในชุดสื่อที่ 5", dist:"ห่างจากจุดเริ่มต้น 2.4 กม.", time:"ใช้เวลา 1 ชม.", x:300, y:300 },
-    2: { tag:"ชุมชนวิถีมอญ", title:"ชุมชนมอญบ้านม่วง", desc:"ชุมชนที่ยังคงพูดภาษามอญในชีวิตประจำวัน มีการสาธิตหัตถกรรมและอาหารพื้นถิ่นให้นักท่องเที่ยวได้สัมผัส", dist:"ห่างจากจุดเริ่มต้น 1.6 กม.", time:"ใช้เวลา 45 นาที", x:230, y:220 },
-    3: { tag:"แหล่งภูมิปัญญา", title:"บ้านเนินหนองบัว", desc:"ต้นแบบภูมิปัญญาวิถีชาวนามอญ ตำบลเตาปูน จุดหมายของชุดสื่อที่ 4 ว่าด้วยการทำนาแบบดั้งเดิม", dist:"ห่างจากจุดเริ่มต้น 5.1 กม.", time:"ใช้เวลา 1 ชม.", x:430, y:190 },
-    4: { tag:"วิถีการค้า", title:"ตลาดน้ำวัดโบสถ์", desc:"ตลาดริมน้ำที่ยังคงกลิ่นอายวิถีมอญ แหล่งชิมอาหารและขนมพื้นบ้านตามรอยชุดสื่อที่ 3", dist:"ห่างจากจุดเริ่มต้น 6.3 กม.", time:"ใช้เวลา 1 ชม.", x:500, y:370 },
+    0: { name:"วัดคงคาราม", tag:"ศาสนสถานสำคัญ · ศูนย์วัฒนธรรมมอญ", title:"วัดคงคาราม · ศูนย์วัฒนธรรมมอญ", area:"ต.คลองตาคต",
+         lat:dms(13,42,36), lon:dms(99,51,0),
+         desc:"จุดเริ่มต้นของเส้นทาง ศูนย์วัฒนธรรมมอญตั้งอยู่ภายในวัดคงคาราม โดยมีพิพิธภัณฑ์พื้นบ้านวัดคงคารามรวบรวมวัตถุโบราณเกี่ยวกับวิถีชีวิตและประวัติศาสตร์ชาวมอญในลุ่มน้ำแม่กลอง วัดมอญเก่าแก่แห่งนี้สร้างปลายสมัยธนบุรีต่อต้นรัตนโกสินทร์ รัชกาลที่ 4 ทรงพระราชทานนาม และขึ้นทะเบียนโบราณสถานเมื่อ พ.ศ. 2518",
+         hl:["จิตรกรรมฝาผนังอายุกว่า 200 ปี ฝีมือครูช่างสมัยรัชกาลที่ 3 (ดูในชุดสื่อที่ 5)","เจดีย์มอญรอบอุโบสถ 7 องค์ แทนเมืองรามัญ 7 เมือง และเสาหงส์สัมฤทธิ์","พิพิธภัณฑ์พื้นบ้าน 10 ห้อง จัดแสดง “ลุ้ง” โลงไม้มอญอายุกว่า 200 ปี และคัมภีร์ใบลานอักษรมอญ","กุฏิสงฆ์ไม้สักทองโบราณ (กุฏิ 7 ห้องและ 9 ห้อง)"],
+         time:"ใช้เวลา 1–1.5 ชม.", lab:{x:14,y:3,a:"start"} },
+    1: { name:"วัดป่าไผ่", tag:"สถาปัตยกรรมและศิลปวัฒนธรรมโบราณ", title:"วัดป่าไผ่ · หอไตรไม้สักทอง", area:"ต.คลองตาคต",
+         lat:dms(13,43,12), lon:dms(99,51,0), dx:-16, dy:0,
+         desc:"วัดมอญรุ่นที่ 3 สมัยรัชกาลที่ 3 ขึ้นตรงต่อวัดคงคาราม ชาวมอญบูรณะขึ้นจากวัดร้างกลางป่าไผ่ ขึ้นชื่อเรื่องหอไตรไม้สักทองทรงปราสาทฝีมือช่างรามัญ",
+         hl:["หอไตรไม้สักทองเรือนยอด 5 ชั้น อิทธิพลพม่าผสมล้านนา แห่งแรกในลุ่มน้ำแม่กลอง","จิตรกรรมยันต์ตรีนิสิงเหบนเพดานไม้ และภาพทวารบาล","หน้าบันปูนปั้นประดับเครื่องถ้วยเบญจรงค์และลายคราม"],
+         time:"ใช้เวลา 30–45 นาที", lab:{x:-13,y:3,a:"end"} },
+    2: { name:"วัดขนอน", tag:"ศิลปะการแสดงและแหล่งอนุรักษ์", title:"พิพิธภัณฑ์หนังใหญ่ วัดขนอน", area:"ต.สร้อยฟ้า",
+         lat:dms(13,43,12), lon:dms(99,51,0), dx:2, dy:-24,
+         desc:"แหล่งอนุรักษ์และสืบสานการแสดงหนังใหญ่ ศิลปะชั้นสูงที่ผสมงานแกะสลัก ดนตรี และการเชิด วัดขนอนเป็นโบราณสถานที่ขึ้นทะเบียนกับกรมศิลปากรตั้งแต่ พ.ศ. 2542",
+         hl:["ตัวหนังใหญ่โบราณแกะสลักลวดลายวิจิตร","สาธิตการเชิดหนังใหญ่ประกอบปี่พาทย์และวงพากย์"],
+         time:"ใช้เวลา 45 นาที", lab:{x:-13,y:3,a:"end"} },
+    3: { name:"ค่ายหลวงบ้านไร่", tag:"แหล่งประวัติศาสตร์โบราณคดี", title:"ค่ายหลวงบ้านไร่", area:"ต.คลองตาคต",
+         lat:dms(13,43,12), lon:dms(99,51,36),
+         desc:"โบราณสถานที่กรมศิลปากรขึ้นทะเบียนไว้ในตำบลคลองตาคต เกี่ยวเนื่องกับบทบาทสำคัญของมณฑลราชบุรีในอดีต",
+         hl:["พื้นที่โบราณสถานที่มีคุณค่าทางประวัติศาสตร์โบราณคดีและการตั้งถิ่นฐานดั้งเดิมของโพธาราม"],
+         time:"ใช้เวลา 30 นาที", lab:{x:13,y:3,a:"start"} },
+    4: { name:"วัดไทรอารีรักษ์", tag:"สถาปัตยกรรมผสมผสาน ไทย–มอญ–ลาว–จีน", title:"วัดไทรอารีรักษ์", area:"ต.โพธาราม",
+         lat:dms(13,42,0), lon:dms(99,51,0), dx:-15, dy:0,
+         desc:"สร้างเมื่อ พ.ศ. 2353 ชาวลาวเวียงจันทน์ตั้งถิ่นฐานอยู่ก่อน ต่อมาชาวมอญอพยพเข้ามาอยู่ร่วมกัน ชื่อ “ไทรอารีรักษ์” เป็นสัญลักษณ์ของความสามัคคีหลังรวมคณะสงฆ์ ได้รับพระราชทานวิสุงคามสีมา พ.ศ. 2360",
+         hl:["เก๋งจีนสูงเกือบ 5 เมตรครอบรอยพระพุทธบาท ประดับภาพสามก๊ก","วิหารทรงลาว พระประธานปางป่าเลไลยก์แกนศิลาแลง อายุกว่า 200 ปี","จิตรกรรมฝาผนัง พ.ศ. 2450 ผสมแนวตะวันตก","ประเพณีลอยกระถางสาย และจุดประทีปรอบโบสถ์"],
+         time:"ใช้เวลา 45 นาที", lab:{x:-13,y:3,a:"end"} },
+    5: { name:"วัดหิรัญราษฎร์", tag:"สถาปัตยกรรมประวัติศาสตร์", title:"ตึกหิรัญราษฎร์ วัดหิรัญราษฎร์", area:"ต.เจ็ดเสมียน",
+         lat:dms(13,42,0), lon:dms(99,51,0), dx:15, dy:0,
+         desc:"อาคารโบราณในวัดหิรัญราษฎร์ ใกล้ลุ่มน้ำแม่กลอง เป็นประจักษ์พยานความเจริญของชุมชนเจ็ดเสมียน",
+         hl:["อาคารอนุรักษ์ที่ผสมผสานวัสดุและการก่อสร้างในอดีตอย่างงดงาม"],
+         time:"ใช้เวลา 20–30 นาที", lab:{x:13,y:3,a:"start"} },
+    6: { name:"วัดเขาช่องพราน", tag:"ธรรมชาติและศาสนสถาน", title:"วัดเขาช่องพราน · ถ้ำค้างคาว ถ้ำพระนอน", area:"ต.เตาปูน",
+         lat:dms(13,43,12), lon:dms(99,46,12),
+         desc:"สร้าง พ.ศ. 2409–2415 โดยพระยาเทพประชุน (ปั้น) ร่วมกับพระครูรามัญบดีและชาวไทยเชื้อสายรามัญ ตั้งอยู่ท่ามกลางเขาหินปูนสองลูก ซึ่งเป็นช่องทางเดินของสัตว์ป่าในอดีต",
+         hl:["ถ้ำพระนอนลึกราว 120 เมตร พระนอนยาว 8 เมตร และพระหินทรายแดงกว่า 200 องค์","ถ้ำค้างคาว ฝูงค้างคาวนับล้านตัวบินออกราว 17.30 น.","บันไดขึ้นยอดเขา 499 ขั้น สู่พระบรมธาตุบวรวิสุทธิเจดีย์","ประเพณีสงกรานต์รามัญ"],
+         time:"ใช้เวลา 1.5–2 ชม. (ควรไปช่วงเย็น)", lab:{x:0,y:-14,a:"middle"} },
+    7: { name:"วัดดอนกระเบื้อง", tag:"ชุมชนวัฒนธรรมและภูมิปัญญา", title:"วัดดอนกระเบื้อง · ชุมชนมอญดอนกระเบื้อง", area:"ต.ดอนกระเบื้อง",
+         lat:dms(13,45,0), lon:dms(99,54,36),
+         desc:"สร้าง พ.ศ. 2358 โดยพระยานิโครธาราม ผู้นำมอญ โดยปรึกษาเจ้าคณะใหญ่วัดคงคาราม ชุมชนอยู่บนเนินดอนน้ำท่วมไม่ถึง พบเศษกระเบื้องดินเผาโบราณมาก สัมพันธ์กับอาชีพปั้นหม้อ ไห และกระเบื้องของชาวมอญ",
+         hl:["จิตรกรรมฝาผนังอุโบสถสีฝุ่นบนดินสอพอง เล่าไตรภูมิ ทศชาติ","งานตัดกระดาษมอญสำหรับประดับพิธีกรรม","แหล่งขุดดินเหนียวหนองหูช้าง (ห่างจากวัดไปทางตะวันตกราว 1 กม.)","ประเพณีโกนจุก (จอโป) ทำบุญกลางบ้าน (มะเงอฮ้อย) ไหว้ผีเดือน 6 (เจียะอะลก)"],
+         time:"ใช้เวลา 1 ชม.", lab:{x:0,y:20,a:"middle"} },
+    8: { name:"บ้านโคกกระต่าย", tag:"แหล่งประวัติศาสตร์", title:"บ้านโคกกระต่าย · ค่ายพักทัพพระเจ้าตากสิน", area:"ต.ธรรมเสน",
+         lat:dms(13,39,36), lon:dms(99,46,48),
+         desc:"พื้นที่โบราณสถานที่ระบุว่าเคยเป็นค่ายพักทัพของสมเด็จพระเจ้าตากสินมหาราชขณะเคลื่อนทัพผ่านลุ่มน้ำแม่กลองเพื่อกอบกู้เอกราช",
+         hl:["เรื่องเล่าท้องถิ่นเกี่ยวกับการตั้งค่ายเตรียมเสบียงและกำลังรบ"],
+         time:"ใช้เวลา 30 นาที", lab:{x:0,y:22,a:"middle"} },
+    9: { name:"ถ้ำสาริกา", tag:"ธรรมชาติและโบราณสถาน", title:"ถ้ำสาริกา", area:"ต.ธรรมเสน",
+         lat:dms(13,38,24), lon:dms(99,44,24),
+         desc:"ถ้ำธรรมชาติที่กรมศิลปากรขึ้นทะเบียนเป็นโบราณสถาน สะท้อนระบบนิเวศถ้ำและประวัติการอยู่อาศัยของผู้คนในลุ่มน้ำแม่กลอง",
+         hl:["แหล่งเรียนรู้โบราณคดีและระบบนิเวศถ้ำหินปูนฝั่งตะวันตก"],
+         time:"ใช้เวลา 45 นาที", lab:{x:0,y:-14,a:"middle"} },
   };
+
+  // ---- projection: lat/lon -> SVG (24 px per km, centred on 13.695°N 99.82°E) ----
+  const PX_KM = 24, KM_LON = 108.15, KM_LAT = 110.6, C_LAT = 13.695, C_LON = 99.82;
+  const proj = (lat,lon)=>({ x: 320 + (lon-C_LON)*KM_LON*PX_KM, y: 230 - (lat-C_LAT)*KM_LAT*PX_KM });
+  function haversine(a,b){
+    const R=6371, r=Math.PI/180;
+    const dLat=(b.lat-a.lat)*r, dLon=(b.lon-a.lon)*r;
+    const h=Math.sin(dLat/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin(dLon/2)**2;
+    return 2*R*Math.asin(Math.sqrt(h));
+  }
+  const origin = mapData[START_ID];
+  Object.keys(mapData).forEach(id=>{
+    const d = mapData[id], p = proj(d.lat, d.lon);
+    d.x = p.x + (d.dx||0); d.y = p.y + (d.dy||0);
+    d.km = haversine(origin, d);
+    d.dist = id===START_ID ? "จุดเริ่มต้นเส้นทาง" : "ห่างจากจุดเริ่มต้น ≈ " + d.km.toFixed(1) + " กม.";
+  });
+  // visiting order: start first, then nearest -> farthest
+  const order = Object.keys(mapData).sort((a,b)=> a===START_ID ? -1 : b===START_ID ? 1 : mapData[a].km - mapData[b].km);
+
+  // ---- draw graticule, sub-district labels, pins ----
+  const NS='http://www.w3.org/2000/svg';
+  let grid='';
+  [13.65,13.70,13.75].forEach(la=>{ const y=proj(la,C_LON).y; grid+=`<line class="map-grid-line" x1="0" y1="${y}" x2="640" y2="${y}"/><text class="map-grid-label" x="6" y="${y-4}">${la.toFixed(2)}°N</text>`; });
+  [99.75,99.80,99.85,99.90].forEach(lo=>{ const x=proj(C_LAT,lo).x; grid+=`<line class="map-grid-line" x1="${x}" y1="0" x2="${x}" y2="460"/><text class="map-grid-label" x="${x+4}" y="14">${lo.toFixed(2)}°E</text>`; });
+  document.getElementById('gridLayer').innerHTML = grid;
+  const areas = [["ต.คลองตาคต",13.7215,99.8625],["ต.โพธาราม",13.6905,99.8585],["ต.เตาปูน",13.7125,99.767],["ต.ธรรมเสน",13.652,99.772],["ต.ดอนกระเบื้อง",13.744,99.9]];
+  document.getElementById('areaLayer').innerHTML = areas.map(([n,la,lo])=>{ const p=proj(la,lo); return `<text class="map-area-label" x="${p.x}" y="${p.y}" text-anchor="middle">${n}</text>`; }).join('');
+
+  document.getElementById('pinLayer').innerHTML = order.map((id,i)=>{
+    const d = mapData[id], isStart = id===START_ID, lab = d.lab||{x:0,y:-14,a:"middle"};
+    const pin = isStart
+      ? `<g class="map-pin start" data-id="${id}" transform="translate(${d.x},${d.y})"><circle class="outer" r="13"/><circle class="ring" r="9"/><circle class="dot" r="6"/></g>`
+      : `<g class="map-pin" data-id="${id}" transform="translate(${d.x},${d.y})"><circle class="ring" r="9"/><circle class="dot" r="8"/><text class="pin-num">${i+1}</text></g>`;
+    const label = isStart
+      ? `<text class="map-label start-label" x="${d.x+lab.x}" y="${d.y+lab.y-8}" text-anchor="${lab.a}">① วัดคงคาราม · เริ่มที่นี่</text><text class="map-label" x="${d.x+lab.x}" y="${d.y+lab.y+5}" text-anchor="${lab.a}" style="font-size:8.5px;opacity:.75">ศูนย์วัฒนธรรมมอญ (ภายในวัด)</text>`
+      : `<text class="map-label" x="${d.x+lab.x}" y="${d.y+lab.y}" text-anchor="${lab.a}">${d.name}</text>`;
+    return pin + label;
+  }).join('');
 
   const pins = document.querySelectorAll('.map-pin');
   const infoBox = document.getElementById('mapInfo');
@@ -1005,7 +1052,6 @@
   const routeLine = document.getElementById('routeLine');
 
   function midpoint(a,b){
-    // gentle curve control point, offset perpendicular to the line
     const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
     const dx=b.x-a.x, dy=b.y-a.y;
     const len=Math.hypot(dx,dy)||1;
@@ -1027,9 +1073,11 @@
     infoBox.innerHTML = `
       <div class="map-info-tag">${d.tag}</div>
       <h3>${d.title}</h3>
+      <div class="sub">${d.area} · อ.โพธาราม จ.ราชบุรี</div>
       <p>${d.desc}</p>
+      <ul class="hl-list">${d.hl.map(h=>`<li>${h}</li>`).join('')}</ul>
       <div class="meta">
-        <div><b>${d.dist}</b>ระยะทาง</div>
+        <div><b>${d.dist}</b>ระยะทาง (เส้นตรง)</div>
         <div><b>${d.time}</b>เวลาแนะนำ</div>
       </div>`;
 
@@ -1048,14 +1096,13 @@
     pin.addEventListener('click', ()=> selectLocation(pin.dataset.id));
   });
 
-  // build the location list from mapData, in a sensible visiting order
-  listBox.innerHTML = Object.keys(mapData).map(id=>{
+  listBox.innerHTML = order.map((id,i)=>{
     const d = mapData[id];
-    const badge = id === START_ID ? '★' : (Number(id)+1);
+    const badge = id === START_ID ? '★' : (i+1);
     return `<div class="map-list-item" data-id="${id}">
       <div class="badge">${badge}</div>
-      <div class="txt"><h5>${d.title}</h5><span>${d.tag}</span></div>
-      <div class="dist">${d.dist.replace('ห่างจากจุดเริ่มต้น ','').replace('จุดเริ่มต้นเส้นทาง','เริ่มที่นี่')}</div>
+      <div class="txt"><h5>${d.title}</h5><span>${d.area} · ${d.tag}</span></div>
+      <div class="dist">${id===START_ID ? 'เริ่มที่นี่' : '≈ '+d.km.toFixed(1)+' กม.'}</div>
     </div>`;
   }).join('');
   listBox.querySelectorAll('.map-list-item').forEach(li=>{
